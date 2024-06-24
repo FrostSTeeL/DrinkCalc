@@ -35,7 +35,7 @@ function StartFunc() {
         localStorage.setItem("shotAmount", "0")
         localStorage.setItem("waterAmount", "0")
         localStorage.setItem("nutsAmount", "0")
-        localStorage.setItem("piclesAmount", "0")
+        localStorage.setItem("picklesAmount", "0")
     }
 }
 

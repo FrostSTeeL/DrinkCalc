@@ -17,12 +17,46 @@ body {
 
 }
 
-#calculator {
+#mainContainer {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     padding: 15px;
     gap: 25px;
+}
+
+#itemContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background-color: #2f7c7c;
+    border-radius: 15px;
+    filter: drop-shadow(5px 5px 4px #0000004b);
+    gap: 25px;
+}
+
+#itemImage {
+    width: 50px;
+    align-self: center;
+    margin-left: 15px;
+}
+
+#drinkName {
+    font-size: x-large;
+    align-self: center;
+    color: rgb(255, 255, 255);
+}
+
+.amount {
+    font-size: 30px;
+    text-align: right;
+    color: rgb(255, 255, 255);
+}
+
+#buttonContainer {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    padding-left: 25px;
+    justify-self: right;
 }
 
 #add {
@@ -47,40 +81,6 @@ body {
     color: white;
     font-size: larger;
     font-weight: bolder;
-}
-
-#drinkImage {
-    width: 50px;
-    align-self: center;
-    margin-left: 15px;
-}
-
-#drinkName {
-    font-size: x-large;
-    align-self: center;
-    color: rgb(255, 255, 255);
-}
-
-.amount {
-    font-size: 30px;
-    text-align: right;
-    color: rgb(255, 255, 255);
-}
-
-#drinkContainer {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    background-color: #2f7c7c;
-    border-radius: 15px;
-    filter: drop-shadow(5px 5px 4px #0000004b);
-    gap: 25px;
-}
-
-#buttonContainer {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    padding-left: 25px;
-    justify-self: right;
 }
 
 #clearButton {
