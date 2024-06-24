@@ -55,6 +55,28 @@
 
         </div>
 
+        <div id="drinkContainer">
+            <img src="img/cashew.png" id="drinkImage">
+            <p id="drinkName">Nuts</p>
+            <p id="nutsAmount" , class="amount">0</p>
+            <div id="buttonContainer">
+                <button onclick="appendToDrink(nutsAmount)" , id="add">+</button>
+                <button onclick="deductFromDrink(nutsAmount)" , id="sub">-</button>
+            </div>
+
+        </div>
+
+        <div id="drinkContainer">
+            <img src="img/pickles.png" id="drinkImage">
+            <p id="drinkName">Pickles</p>
+            <p id="picklesAmount" , class="amount">0</p>
+            <div id="buttonContainer">
+                <button onclick="appendToDrink(picklesAmount)" , id="add">+</button>
+                <button onclick="deductFromDrink(picklesAmount)" , id="sub">-</button>
+            </div>
+
+        </div>
+
         <button onclick="ClearStorage()" , id="clearButton">Clear</button>
 
     </div>
