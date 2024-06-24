@@ -35,6 +35,7 @@ body {
     color: white;
     font-size: larger;
     font-weight: bolder;
+    box-shadow: 2px 2px 4px #0000004b;
 }
 
 #sub {
@@ -47,6 +48,7 @@ body {
     color: white;
     font-size: larger;
     font-weight: bolder;
+    box-shadow: 2px 2px 4px #0000004b;
 }
 
 #drinkImage {
@@ -70,8 +72,9 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     padding: 15px;
-    background-color: #00ffff4d;
+    background-color: #2f7c7c;
     border-radius: 15px;
+    filter: drop-shadow(5px 5px 4px #0000004b);
 }
 
 #buttonContainer {
@@ -82,11 +85,12 @@ body {
 }
 
 #clearButton {
-    background-color: rgba(255, 0, 0, 0.692);
+    background-color: rgb(194, 0, 0);
     border-radius: 15px;
     border: none;
     height: 200%;
     color: white;
     font-size: 25px;
     font-weight: bold;
+    filter: drop-shadow(5px 5px 4px #0000004b);
 }
