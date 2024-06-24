@@ -1,0 +1,87 @@
+:root {
+    touch-action: pan-x pan-y;
+    height: 100%
+}
+
+body {
+    margin: 0;
+    display: flex;
+    justify-content: start;
+    align-items: flex-start;
+    height: 100vh;
+    padding: 5px;
+    background-color: rgb(68, 68, 68);
+
+}
+
+#calculator {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    padding: 15px;
+    gap: 25px;
+}
+
+#add {
+    align-self: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+    border: none;
+    background-color: rgb(107, 241, 107);
+    color: white;
+    font-size: larger;
+}
+
+#sub {
+    align-self: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+    border: none;
+    background-color: rgb(241, 107, 107);
+    color: white;
+    font-size: larger;
+}
+
+#drinkImage {
+    width: 50px;
+    align-self: center;
+}
+
+#drinkName {
+    font-size: x-large;
+    align-self: center;
+    color: rgb(255, 255, 255);
+}
+
+.amount {
+    font-size: 30px;
+    text-align: right;
+    color: rgb(255, 255, 255);
+}
+
+#drinkContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 15px;
+    background-color: #00ffff4d;
+    border-radius: 15px;
+}
+
+#buttonContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 25px;
+    gap: 25px;
+}
+
+#clearButton {
+    background-color: rgba(255, 0, 0, 0.692);
+    border-radius: 15px;
+    border: none;
+    height: 200%;
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+}

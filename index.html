@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>Drink Tracker</title>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body onload="javascript:StartFunc()">
+    <div id="calculator">
+        <div id="drinkContainer">
+            <img src="img/beer.png" id="drinkImage">
+            <p id="drinkName">Beer</p>
+            <div id="buttonContainer">
+                <button onclick="appendToDrink(beerAmount)" , id="add">+</button>
+                <button onclick="deductFromDrink(beerAmount)" , id="sub">-</button>
+            </div>
+            <p id="beerAmount" , class="amount">0</p>
+
+        </div>
+        <div id="drinkContainer">
+            <img src="img/gin-tonic.png" id="drinkImage">
+            <p id="drinkName">Gin</p>
+            <div id="buttonContainer">
+                <button onclick="appendToDrink(ginAmount)" , id="add">+</button>
+                <button onclick="deductFromDrink(ginAmount)" , id="sub">-</button>
+            </div>
+            <p id="ginAmount" , class="amount">0</p>
+
+        </div>
+
+        <div id="drinkContainer">
+            <img src="img/shot.png" id="drinkImage">
+            <p id="drinkName">Shot</p>
+            <div id="buttonContainer">
+                <button onclick="appendToDrink(shotAmount)" , id="add">+</button>
+                <button onclick="deductFromDrink(shotAmount)" , id="sub">-</button>
+            </div>
+            <p id="shotAmount" , class="amount">0</p>
+
+        </div>
+
+        <div id="drinkContainer">
+            <img src="img/water.png" id="drinkImage">
+            <p id="drinkName">Water</p>
+            <div id="buttonContainer">
+                <button onclick="appendToDrink(waterAmount)" , id="add">+</button>
+                <button onclick="deductFromDrink(waterAmount)" , id="sub">-</button>
+            </div>
+            <p id="waterAmount" , class="amount">0</p>
+
+        </div>
+
+        <button onclick="ClearStorage()" , id="clearButton">Clear</button>
+
+    </div>
+    <script src="index.js"></script>
+</body>
+
+</html>
