@@ -29,31 +29,30 @@ body {
     align-self: center;
     width: 50px;
     height: 50px;
-    border-radius: 15px;
+    border-top-right-radius: 15px;
     border: none;
     background-color: rgb(107, 241, 107);
     color: white;
     font-size: larger;
     font-weight: bolder;
-    box-shadow: 2px 2px 4px #0000004b;
 }
 
 #sub {
     align-self: center;
     width: 50px;
     height: 50px;
-    border-radius: 15px;
+    border-bottom-right-radius: 15px;
     border: none;
     background-color: rgb(241, 107, 107);
     color: white;
     font-size: larger;
     font-weight: bolder;
-    box-shadow: 2px 2px 4px #0000004b;
 }
 
 #drinkImage {
     width: 50px;
     align-self: center;
+    margin-left: 15px;
 }
 
 #drinkName {
@@ -71,17 +70,17 @@ body {
 #drinkContainer {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    padding: 15px;
     background-color: #2f7c7c;
     border-radius: 15px;
     filter: drop-shadow(5px 5px 4px #0000004b);
+    gap: 25px;
 }
 
 #buttonContainer {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    padding: 25px;
-    gap: 25px;
+    grid-template-columns: repeat(1, 1fr);
+    padding-left: 25px;
+    justify-self: right;
 }
 
 #clearButton {
