@@ -6,7 +6,7 @@
 body {
     margin: 0;
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: flex-start;
     height: 100vh;
     padding: 5px;
