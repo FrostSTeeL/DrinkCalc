@@ -31,6 +31,7 @@ body {
     background-color: rgb(107, 241, 107);
     color: white;
     font-size: larger;
+    font-weight: bolder;
 }
 
 #sub {
@@ -42,6 +43,7 @@ body {
     background-color: rgb(241, 107, 107);
     color: white;
     font-size: larger;
+    font-weight: bolder;
 }
 
 #drinkImage {
