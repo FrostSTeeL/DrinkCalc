@@ -1,5 +1,6 @@
 var beerAmount = document.getElementById("beerAmount");
 var ginAmount = document.getElementById("ginAmount");
+var cocktailAmount = document.getElementById("cocktailAmount");
 var shotAmount = document.getElementById("shotAmount");
 var waterAmount = document.getElementById("waterAmount");
 var nutsAmount = document.getElementById("nutsAmount");
@@ -11,14 +12,12 @@ var friesAmount = document.getElementById("friesAmount");
 const canVibrate = window.navigator.vibrate;
 
 function appendToDrink(drinkName) {
-    if (canVibrate) window.navigator.vibrate(20)
     var newNum = parseInt(drinkName.textContent) + 1;
     drinkName.textContent = newNum;
     localStorage.setItem(drinkName.id, newNum);
 }
 
 function deductFromDrink(drinkName) {
-    if (canVibrate) window.navigator.vibrate(20)
     if (parseInt(drinkName.textContent) > 0) {
         var newNum = parseInt(drinkName.textContent) - 1;
         drinkName.textContent = newNum;
@@ -32,6 +31,7 @@ function StartFunc() {
     if (localStorage.getItem("beerAmount") != null) {
         beerAmount.textContent = localStorage.getItem("beerAmount")
         ginAmount.textContent = localStorage.getItem("ginAmount")
+        cocktailAmount.textContent = localStorage.getItem("cocktailAmount")
         shotAmount.textContent = localStorage.getItem("shotAmount")
         waterAmount.textContent = localStorage.getItem("waterAmount")
         nutsAmount.textContent = localStorage.getItem("nutsAmount")
@@ -41,20 +41,20 @@ function StartFunc() {
         friesAmount.textContent = localStorage.getItem("friesAmount")
     } else {
         localStorage.setItem("beerAmount", "0");
-        localStorage.setItem("ginAmount", "0")
-        localStorage.setItem("shotAmount", "0")
-        localStorage.setItem("waterAmount", "0")
-        localStorage.setItem("nutsAmount", "0")
-        localStorage.setItem("pCornAmount", "0")
-        localStorage.setItem("picklesAmount", "0")
-        localStorage.setItem("foodAmount", "0")
-        localStorage.setItem("friesAmount", "0")
+        localStorage.setItem("ginAmount", "0");
+        localStorage.setItem("cocktailAmount", "0");
+        localStorage.setItem("shotAmount", "0");
+        localStorage.setItem("waterAmount", "0");
+        localStorage.setItem("nutsAmount", "0");
+        localStorage.setItem("pCornAmount", "0");
+        localStorage.setItem("picklesAmount", "0");
+        localStorage.setItem("foodAmount", "0");
+        localStorage.setItem("friesAmount", "0");
         location.reload();
     }
 }
 
 function ClearStorage() {
-    if (canVibrate) window.navigator.vibrate(20)
     localStorage.clear();
     location.reload();
 }
