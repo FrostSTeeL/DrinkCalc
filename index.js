@@ -8,13 +8,17 @@ var picklesAmount = document.getElementById("picklesAmount");
 var foodAmount = document.getElementById("foodAmount");
 var friesAmount = document.getElementById("friesAmount");
 
+const canVibrate = window.navigator.vibrate;
+
 function appendToDrink(drinkName) {
+    if (canVibrate) window.navigator.vibrate(20)
     var newNum = parseInt(drinkName.textContent) + 1;
     drinkName.textContent = newNum;
     localStorage.setItem(drinkName.id, newNum);
 }
 
 function deductFromDrink(drinkName) {
+    if (canVibrate) window.navigator.vibrate(20)
     if (parseInt(drinkName.textContent) > 0) {
         var newNum = parseInt(drinkName.textContent) - 1;
         drinkName.textContent = newNum;
@@ -50,6 +54,7 @@ function StartFunc() {
 }
 
 function ClearStorage() {
+    if (canVibrate) window.navigator.vibrate(20)
     localStorage.clear();
     location.reload();
 }
