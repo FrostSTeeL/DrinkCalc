@@ -45,6 +45,7 @@ function StartFunc() {
         localStorage.setItem("picklesAmount", "0")
         localStorage.setItem("foodAmount", "0")
         localStorage.setItem("friesAmount", "0")
+        location.reload();
     }
 }
 
