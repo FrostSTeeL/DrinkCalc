@@ -15,8 +15,6 @@ body {
     height: 100vh;
     padding: 5px;
     background-color: rgb(68, 68, 68);
-    padding-bottom: 20px;
-
 }
 
 #mainContainer {
@@ -95,4 +93,5 @@ body {
     font-size: 25px;
     font-weight: bold;
     filter: drop-shadow(5px 5px 4px #0000004b);
+    padding-bottom: 20px;
 }
