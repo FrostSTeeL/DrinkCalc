@@ -170,30 +170,38 @@ body.cyberpunk {
 }
 
 body.cyberpunk #totalContainer {
-    /* Now matches the item containers exactly */
-    background-color: var(--cp-panel-bg); 
-    border: 1px solid var(--cp-cyan); /* Cyan to indicate it's the total */
-    border-left: 5px solid var(--cp-cyan); /* That HUD accent strip */
+    /* 1. Solid background to block out scrolling elements */
+    background-color: var(--cp-dark-bg); 
+    
+    /* 2. Sharp Cyan frame and HUD accent */
+    border: 1px solid var(--cp-cyan);
+    border-left: 5px solid var(--cp-cyan); 
     
     border-radius: 0;
-    /* Angular cut at the bottom right */
-    clip-path: polygon(0 0, 100% 0, 100% 70%, 95% 100%, 0 100%);
+    /* Angular tech cut */
+    clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
     
-    /* Subtle cyan glow to separate it from the red items below */
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.15);
-    color: var(--cp-cyan);
+    /* 3. Outer glow to make the solid box "pop" */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.9);
+    
+    /* Ensure no transparency at all */
+    opacity: 1;
 }
 
 body.cyberpunk .total-label {
-    color: var(--cp-cyan);
+    /* Matches item text color */
+    color: var(--cp-red); 
     text-transform: uppercase;
-    font-family: 'Courier New', monospace;
-    opacity: 0.8;
+    font-family: 'Arial', sans-serif;
+    letter-spacing: 2px;
 }
 
 body.cyberpunk .total-amount-box {
-    color: var(--cp-cyan);
-    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    /* Matches item text color */
+    color: var(--cp-red);
+    font-weight: 800;
+    /* Subtle red glow instead of cyan */
+    text-shadow: 0 0 5px rgba(255, 0, 60, 0.3);
 }
 
 body.cyberpunk .itemContainer {
