@@ -177,27 +177,36 @@ body.cyberpunk .amount.active-count {
     clip-path: none;
 }
 
-/* CLASSIC DARK MODE (Triggered by Phone System) */
+/* =========================================
+   2. CLASSIC DARK MODE (50% Darker)
+   ========================================= */
 @media (prefers-color-scheme: dark) {
-    /* We use :not(.cyberpunk) so these don't fight with your Cyberpunk theme */
+    /* Only apply if the body DOES NOT have the cyberpunk class */
     body:not(.cyberpunk) {
-        background-color: #1a1a1a; /* Dark charcoal instead of grey */
+        background-color: #080808; /* Near-Black Charcoal */
     }
 
     body:not(.cyberpunk) .itemContainer {
-        background-color: #1b4d4d; /* Deeper teal */
-        filter: drop-shadow(5px 5px 8px rgba(0, 0, 0, 0.5));
-    }
-
-    body:not(.cyberpunk) #themeToggle, 
-    body:not(.cyberpunk) #clearButton {
-        filter: drop-shadow(5px 5px 6px rgba(0, 0, 0, 0.4));
+        /* Deepened from #1b4d4d to an "Ink" Teal */
+        background-color: #0a2424; 
+        border: 1px solid #143333; /* Very subtle border to define the shape */
+        filter: drop-shadow(5px 5px 12px rgba(0, 0, 0, 0.9));
     }
 
     body:not(.cyberpunk) #themeToggle {
-        background-color: #333;
-        color: #fff;
-        border: 1px solid #444;
+        background-color: #1a1a1a;
+        color: #888; /* Dimmed text so it's not too bright */
+        border: 1px solid #222;
+    }
+
+    body:not(.cyberpunk) #add {
+        /* Muted the green slightly to match the darker aesthetic */
+        background-color: #2a5c2a; 
+    }
+
+    body:not(.cyberpunk) #sub {
+        /* Muted the red slightly */
+        background-color: #5c2a2a; 
     }
 }
 
