@@ -1,6 +1,6 @@
 :root {
     touch-action: pan-x pan-y;
-    height: 100%;
+    /* Removed height: 100% here so it doesn't restrict mobile scrolling */
     user-select: none;
     white-space: nowrap;
     -webkit-touch-callout: none;
@@ -12,22 +12,26 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    min-height: 100vh; /* Allows the body to stretch past the screen edge */
-    padding: 5px;
+    min-height: 100vh;
+    padding: 10px; /* This padding provides the small distance from the screen edges */
     background-color: rgb(68, 68, 68);
+    box-sizing: border-box;
 }
 
 #mainContainer {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    padding: 15px;
+    width: 100%; /* Stretches items to be wider */
+    max-width: 600px; /* Prevents it from looking stretched out on a desktop monitor */
+    padding-bottom: 40px; /* Guaranteed breathing room at the bottom of the page */
     gap: 25px;
+    box-sizing: border-box;
 }
 
 .itemContainer {
     display: grid;
-    grid-template-columns: 70px 1fr 40px 75px; /* Locks your columns for mobile */
+    grid-template-columns: 70px 1fr 40px 75px; 
     background-color: #2f7c7c;
     border-radius: 15px;
     filter: drop-shadow(5px 5px 4px #0000004b);
@@ -40,19 +44,19 @@ body {
 }
 
 #drinkName {
-    font-size: clamp(14px, 5vw, 24px); /* Dynamically scales font size */
+    font-size: clamp(14px, 5vw, 24px); 
     align-self: center;
     text-align: left;
     color: rgb(255, 255, 255);
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; /* Adds '...' if text gets too long for the screen */
+    text-overflow: ellipsis; 
 }
 
 .amount {
     font-size: 30px;
     text-align: right;
-    align-self: center; /* Vertically centers the number */
+    align-self: center; 
     color: rgb(255, 255, 255);
 }
 
@@ -73,7 +77,7 @@ body {
     font-size: larger;
     font-weight: bolder;
     cursor: pointer;
-    transition: transform 0.1s ease; /* Smooths the press animation */
+    transition: transform 0.1s ease; 
 }
 
 #sub {
@@ -87,24 +91,22 @@ body {
     font-size: larger;
     font-weight: bolder;
     cursor: pointer;
-    transition: transform 0.1s ease; /* Smooths the press animation */
+    transition: transform 0.1s ease; 
 }
 
 #clearButton {
     background-color: rgb(194, 0, 0);
     border-radius: 15px;
     border: none;
-    height: 200%; /* Kept your hardcoded height! */
-    margin-bottom: 30px; /* The breathing room at the bottom of the screen */
+    height: 60px; /* Fixed, touch-friendly height */
     color: white;
     font-size: 25px;
     font-weight: bold;
     filter: drop-shadow(5px 5px 4px #0000004b);
     cursor: pointer;
-    transition: transform 0.1s ease; /* Smooths the press animation */
+    transition: transform 0.1s ease; 
 }
 
-/* Adds a satisfying "click" down effect when tapping buttons */
 #add:active, #sub:active, #clearButton:active {
     transform: scale(0.92);
 }
