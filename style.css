@@ -141,6 +141,10 @@ body {
     text-transform: none;
 }
 
+body.cyberpunk .amount.active-count {
+    color: var(--cp-cyan) !important;
+}
+
 #add {
     background-color: rgb(107, 241, 107); 
     color: white; 
