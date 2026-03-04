@@ -1,161 +1,191 @@
-var beerAmount = document.getElementById("beerAmount");
-var ginAmount = document.getElementById("ginAmount");
-var cocktailAmount = document.getElementById("cocktailAmount");
-var shotAmount = document.getElementById("shotAmount");
-var waterAmount = document.getElementById("waterAmount");
-var nutsAmount = document.getElementById("nutsAmount");
-var pCornAmount = document.getElementById("pCornAmount");
-var picklesAmount = document.getElementById("picklesAmount");
-var foodAmount = document.getElementById("foodAmount");
-var friesAmount = document.getElementById("friesAmount");
+/* =========================================
+   1. GLOBAL VARIABLES & PRICE SETUP
+   ========================================= */
 
-const canVibrate = window.navigator.vibrate;
+// Item IDs as they appear in your HTML
+const itemIds = [
+    "beerAmount", "ginAmount", "cocktailAmount", "shotAmount", 
+    "waterAmount", "nutsAmount", "pCornAmount", "picklesAmount", 
+    "foodAmount", "friesAmount"
+];
 
-function appendToDrink(drinkName) {
-    var newNum = parseInt(drinkName.textContent) + 1;
-    drinkName.textContent = newNum;
-    localStorage.setItem(drinkName.id, newNum);
+// Default Turkish Lira Prices
+const defaultPrices = {
+    beerAmount: 150, ginAmount: 350, cocktailAmount: 400, 
+    shotAmount: 100, waterAmount: 40, nutsAmount: 60, 
+    pCornAmount: 80, picklesAmount: 50, foodAmount: 450, friesAmount: 150
+};
+
+// Load existing prices or use defaults
+let itemPrices = JSON.parse(localStorage.getItem('itemPrices')) || defaultPrices;
+
+/* =========================================
+   2. CORE FUNCTIONS (Quantity & Storage)
+   ========================================= */
+
+function appendToDrink(drinkElement) {
+    let newNum = parseInt(drinkElement.textContent) || 0;
+    newNum++;
+    drinkElement.textContent = newNum;
+    localStorage.setItem(drinkElement.id, newNum);
+    // Math is updated automatically via the MutationObserver at the bottom
 }
 
-function deductFromDrink(drinkName) {
-    if (parseInt(drinkName.textContent) > 0) {
-        var newNum = parseInt(drinkName.textContent) - 1;
-        drinkName.textContent = newNum;
-        localStorage.setItem(drinkName.id, newNum);
-    } else {
-        drinkName.textContent = 0;
+function deductFromDrink(drinkElement) {
+    let currentNum = parseInt(drinkElement.textContent) || 0;
+    if (currentNum > 0) {
+        let newNum = currentNum - 1;
+        drinkElement.textContent = newNum;
+        localStorage.setItem(drinkElement.id, newNum);
     }
 }
 
 function StartFunc() {
-    if (localStorage.getItem("beerAmount") != null) {
-        beerAmount.textContent = localStorage.getItem("beerAmount")
-        ginAmount.textContent = localStorage.getItem("ginAmount")
-        cocktailAmount.textContent = localStorage.getItem("cocktailAmount")
-        shotAmount.textContent = localStorage.getItem("shotAmount")
-        waterAmount.textContent = localStorage.getItem("waterAmount")
-        nutsAmount.textContent = localStorage.getItem("nutsAmount")
-        pCornAmount.textContent = localStorage.getItem("pCornAmount")
-        picklesAmount.textContent = localStorage.getItem("picklesAmount")
-        foodAmount.textContent = localStorage.getItem("foodAmount")
-        friesAmount.textContent = localStorage.getItem("friesAmount")
-    } else {
-        localStorage.setItem("beerAmount", "0");
-        localStorage.setItem("ginAmount", "0");
-        localStorage.setItem("cocktailAmount", "0");
-        localStorage.setItem("shotAmount", "0");
-        localStorage.setItem("waterAmount", "0");
-        localStorage.setItem("nutsAmount", "0");
-        localStorage.setItem("pCornAmount", "0");
-        localStorage.setItem("picklesAmount", "0");
-        localStorage.setItem("foodAmount", "0");
-        localStorage.setItem("friesAmount", "0");
-        location.reload();
+    // Load counts from LocalStorage
+    itemIds.forEach(id => {
+        const savedVal = localStorage.getItem(id);
+        const element = document.getElementById(id);
+        if (element) {
+            element.textContent = savedVal !== null ? savedVal : "0";
+        }
+    });
+
+    // If first time ever, initialize storage
+    if (localStorage.getItem("beerAmount") === null) {
+        itemIds.forEach(id => localStorage.setItem(id, "0"));
     }
+    
+    calculateTotal();
 }
 
 function ClearStorage() {
-    // 1. Get all amount elements
-    const amounts = document.querySelectorAll('.amount');
-
-    // 2. Reset the numbers in the UI and localStorage
-    amounts.forEach(el => {
-        el.textContent = "0";
-        localStorage.setItem(el.id, "0");
-        // Also remove the cyan color class immediately
-        el.classList.remove('active-count');
-    });
-
-    // Note: We don't touch the 'theme' key in localStorage, 
-    // and we don't call location.reload(), so the theme never flickers!
-}
-
-const themeToggle = document.getElementById('themeToggle');
-
-// Check if the user already chose Cyberpunk in a previous visit
-if (localStorage.getItem('theme') === 'cyberpunk') {
-    document.body.classList.add('cyberpunk');
-    themeToggle.innerText = 'SWITCH TO CLASSIC MODE';
-} else {
-    // Set default text for classic mode
-    themeToggle.innerText = 'SWITCH TO CYBERPUNK MODE';
-}
-
-// Listen for the button click
-themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('cyberpunk');
+    const currentTheme = localStorage.getItem('theme');
+    localStorage.clear();
     
-    // Update the button text and save to localStorage
-    if (document.body.classList.contains('cyberpunk')) {
-        themeToggle.innerText = 'SWITCH TO CLASSIC MODE';
-        localStorage.setItem('theme', 'cyberpunk');
-    } else {
-        themeToggle.innerText = 'SWITCH TO CYBERPUNK MODE';
-        localStorage.setItem('theme', 'classic');
-    }
-});
+    // Put theme and prices back
+    if (currentTheme) localStorage.setItem('theme', currentTheme);
+    localStorage.setItem('itemPrices', JSON.stringify(itemPrices));
 
-// This observer handles the color switching automatically
-const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-        const el = mutation.target;
-        const count = parseInt(el.textContent);
-        
-        if (count > 0) {
-            el.classList.add('active-count');
-        } else {
+    // Update UI instantly without refresh
+    itemIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.textContent = "0";
             el.classList.remove('active-count');
         }
     });
-});
+    calculateTotal();
+}
 
-// Start watching every drink/food amount
-document.querySelectorAll('.amount').forEach((amountEl) => {
-    // Run once on load to catch existing numbers from localStorage
-    if (parseInt(amountEl.textContent) > 0) amountEl.classList.add('active-count');
-    
-    // Watch for future changes
-    observer.observe(amountEl, { childList: true });
-});
+/* =========================================
+   3. CALCULATION & PRICE SETTINGS
+   ========================================= */
 
-
-
-// Add these to your price logic
 function calculateTotal() {
     let total = 0;
-    Object.keys(itemPrices).forEach(id => {
+    itemIds.forEach(id => {
         const element = document.getElementById(id);
         if (element) {
             const quantity = parseInt(element.textContent) || 0;
-            const price = itemPrices[id];
+            const price = itemPrices[id] || 0;
             total += quantity * price;
         }
     });
-    // Formats with TL symbol
-    document.getElementById("totalPrice").textContent = total.toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+
+    const totalDisplay = document.getElementById("totalPrice");
+    if (totalDisplay) {
+        totalDisplay.textContent = total.toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+    }
 }
 
 function setupPriceInputs() {
     const grid = document.getElementById('settingsGrid');
+    if (!grid) return;
     grid.innerHTML = ''; 
     
-    for (const [id, price] of Object.entries(itemPrices)) {
-        const name = id.replace('Amount', '');
+    itemIds.forEach(id => {
+        const name = id.replace('Amount', '').toUpperCase();
+        const price = itemPrices[id] || 0;
+        
         const div = document.createElement('div');
         div.className = "price-item";
         div.innerHTML = `
             <label>${name}</label>
-            <input type="number" step="1" value="${price}" 
-                   onchange="changePrice('${id}', this.value)">
+            <input type="number" value="${price}" onchange="updatePrice('${id}', this.value)">
         `;
         grid.appendChild(div);
-    }
+    });
 }
 
-// Modal Toggle Logic
-const modal = document.getElementById("settingsModal");
-document.getElementById("openSettings").onclick = () => {
-    setupPriceInputs();
-    modal.style.display = "block";
-};
-document.getElementById("closeSettings").onclick = () => modal.style.display = "none";
+function updatePrice(id, newPrice) {
+    itemPrices[id] = parseFloat(newPrice) || 0;
+    localStorage.setItem('itemPrices', JSON.stringify(itemPrices));
+    calculateTotal();
+}
+
+/* =========================================
+   4. THEME & MODAL LOGIC (Wait for DOM)
+   ========================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Initial Start
+    StartFunc();
+
+    // 2. Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    if (localStorage.getItem('theme') === 'cyberpunk') {
+        document.body.classList.add('cyberpunk');
+        themeToggle.innerText = 'SWITCH TO CLASSIC MODE';
+    }
+
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('cyberpunk');
+        if (document.body.classList.contains('cyberpunk')) {
+            themeToggle.innerText = 'SWITCH TO CLASSIC MODE';
+            localStorage.setItem('theme', 'cyberpunk');
+        } else {
+            themeToggle.innerText = 'SWITCH TO CYBERPUNK MODE';
+            localStorage.setItem('theme', 'classic');
+        }
+    });
+
+    // 3. Modal Controls
+    const modal = document.getElementById("settingsModal");
+    const openBtn = document.getElementById("openSettings");
+    const closeBtn = document.getElementById("closeSettings");
+
+    if (openBtn) {
+        openBtn.onclick = () => {
+            setupPriceInputs();
+            modal.style.display = "block";
+        };
+    }
+
+    if (closeBtn) {
+        closeBtn.onclick = () => modal.style.display = "none";
+    }
+
+    window.onclick = (event) => {
+        if (event.target == modal) modal.style.display = "none";
+    };
+
+    // 4. Automatic Color & Total Observer
+    // Watches for text changes so you don't have to manually call functions everywhere
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            const el = mutation.target;
+            const count = parseInt(el.textContent) || 0;
+            
+            // Handle color highlight
+            if (count > 0) el.classList.add('active-count');
+            else el.classList.remove('active-count');
+            
+            // Handle math update
+            calculateTotal();
+        });
+    });
+
+    document.querySelectorAll('.amount').forEach((amountEl) => {
+        observer.observe(amountEl, { childList: true });
+    });
+});
