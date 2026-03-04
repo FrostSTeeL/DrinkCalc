@@ -55,7 +55,18 @@ function StartFunc() {
 }
 
 function ClearStorage() {
+// 1. Memorize the current theme
+    const currentTheme = localStorage.getItem('theme');
+    
+    // 2. Clear everything (resets drink counts)
     localStorage.clear();
+    
+    // 3. Put the theme back immediately!
+    if (currentTheme) {
+        localStorage.setItem('theme', currentTheme);
+    }
+    
+    // 4. Reload the page (or whatever your code currently does to reset the UI)
     location.reload();
 }
 
