@@ -55,19 +55,19 @@ function StartFunc() {
 }
 
 function ClearStorage() {
-// 1. Memorize the current theme
-    const currentTheme = localStorage.getItem('theme');
-    
-    // 2. Clear everything (resets drink counts)
-    localStorage.clear();
-    
-    // 3. Put the theme back immediately!
-    if (currentTheme) {
-        localStorage.setItem('theme', currentTheme);
-    }
-    
-    // 4. Reload the page (or whatever your code currently does to reset the UI)
-    location.reload();
+    // 1. Get all amount elements
+    const amounts = document.querySelectorAll('.amount');
+
+    // 2. Reset the numbers in the UI and localStorage
+    amounts.forEach(el => {
+        el.textContent = "0";
+        localStorage.setItem(el.id, "0");
+        // Also remove the cyan color class immediately
+        el.classList.remove('active-count');
+    });
+
+    // Note: We don't touch the 'theme' key in localStorage, 
+    // and we don't call location.reload(), so the theme never flickers!
 }
 
 const themeToggle = document.getElementById('themeToggle');
