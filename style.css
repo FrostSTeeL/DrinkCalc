@@ -34,10 +34,50 @@ body {
 }
 
 /* =========================================
-   2. ORTAK BİLEŞENLER (CLASSIC)
+   2. ÜRÜN KARTLARI (DİKEY ORTALAMA)
    ========================================= */
 
-/* TOPLAM BARI */
+.itemContainer {
+    display: grid;
+    grid-template-columns: 80px 1fr 50px 60px;
+    background-color: #2f7c7c;
+    color: white;
+    margin-bottom: 12px;
+    border-radius: 15px;
+    height: 90px;
+    overflow: hidden;
+    align-items: center; /* Tüm grid öğelerini dikeyde ortalar */
+}
+
+#itemImage {
+    width: 45px;
+    margin-left: 15px;
+    transition: all 0.3s ease;
+    display: block;
+}
+
+#drinkName { 
+    font-size: 16px; 
+    text-transform: uppercase; 
+    margin: 0; 
+    padding: 0;
+    display: flex;
+    align-items: center; 
+    height: 100%;
+}
+
+.amount { 
+    font-size: 26px; 
+    text-align: right; 
+    padding-right: 15px; 
+    margin: 0; 
+    display: flex;
+    align-items: center; 
+    justify-content: flex-end;
+    height: 100%;
+}
+
+/* TOPLAM BARI (YAPIŞKAN) */
 #totalContainer {
     position: sticky;
     top: 10px;
@@ -57,29 +97,10 @@ body {
 .total-label { font-size: 14px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; }
 .total-amount-box { font-size: 24px; font-weight: 800; }
 
-/* ÜRÜN KARTLARI */
-.itemContainer {
-    display: grid;
-    grid-template-columns: 80px 1fr 50px 60px;
-    background-color: #2f7c7c;
-    color: white;
-    margin-bottom: 12px;
-    border-radius: 15px;
-    height: 90px;
-    overflow: hidden;
-}
+/* =========================================
+   3. BUTONLAR (+ / - VE ANA BUTONLAR)
+   ========================================= */
 
-#itemImage {
-    width: 45px;
-    align-self: center;
-    margin-left: 15px;
-    transition: all 0.3s ease;
-}
-
-#drinkName { font-size: 16px; align-self: center; text-transform: uppercase; margin: 0; }
-.amount { font-size: 26px; text-align: right; align-self: center; padding-right: 15px; margin: 0; }
-
-/* BUTONLAR (+ / -) */
 #buttonContainer {
     display: grid;
     grid-template-rows: 1fr 1fr;
@@ -95,12 +116,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 45px;
 }
 
 #add { background-color: #6bf16b; }
 #sub { background-color: #f16b6b; }
 
-/* ANA BUTONLAR */
 #themeToggle, #clearButton, #openSettings {
     width: 100%;
     padding: 15px;
@@ -110,13 +131,16 @@ body {
     font-weight: bold;
     cursor: pointer;
     text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #clearButton { background-color: #c20000; color: white; }
 #themeToggle { background-color: #eee; color: #333; }
 #openSettings { background: transparent; border: 1px dashed #888; color: #888; font-size: 12px; letter-spacing: 1px; }
 
 /* =========================================
-   3. MODAL (POPUP) SİSTEMİ
+   4. MODAL SİSTEMİ (AYARLAR VE ONAY)
    ========================================= */
 .modal {
     display: none;
@@ -150,7 +174,7 @@ body {
 .cancel-btn { background: #444; color: white; }
 
 /* =========================================
-   4. CLASSIC DARK MODE (50% DARKER)
+   5. CLASSIC DARK MODE (SİSTEM AYARI)
    ========================================= */
 @media (prefers-color-scheme: dark) {
     body:not(.cyberpunk) { background-color: #080808; }
@@ -161,68 +185,96 @@ body {
 }
 
 /* =========================================
-   5. CYBERPUNK THEME (FULL GLOW & HUD)
+   6. CYBERPUNK THEME (FULL HUD & RENK HİYERARŞİSİ)
    ========================================= */
 
-body.cyberpunk {
-    background-color: var(--cp-dark-bg);
-    background-image: 
-        linear-gradient(rgba(255, 0, 60, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 0, 60, 0.02) 1px, transparent 1px);
-    background-size: 20px 20px;
-}
+body.cyberpunk { background-color: var(--cp-dark-bg); }
 
-/* CYBERPUNK KONTEYNERLAR VE KESİMLER */
+/* TÜM KONTEYNERLARIN ORTAK SİBER KESİMİ */
 body.cyberpunk .itemContainer,
 body.cyberpunk #totalContainer,
 body.cyberpunk #themeToggle, 
 body.cyberpunk #clearButton, 
 body.cyberpunk #openSettings {
     background-color: var(--cp-panel-bg) !important;
-    border: 1px solid var(--cp-red) !important;
     border-radius: 0 !important;
     clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px) !important;
-    box-shadow: 0 0 10px rgba(255, 0, 60, 0.3), inset 0 0 5px rgba(255, 0, 60, 0.1) !important;
+    align-items: center;
 }
 
-/* TOPLAM BARI ÖZEL (CYAN GLOW) */
+/* ÖZEL BUTON RENKLERİ */
+
+/* 1. LİSTEYİ TEMİZLE (KIRMIZI) */
+body.cyberpunk #clearButton {
+    color: var(--cp-red) !important;
+    border: 1px solid var(--cp-red) !important;
+    text-shadow: 0 0 8px rgba(255, 0, 60, 0.6);
+    box-shadow: 0 0 10px rgba(255, 0, 60, 0.4), inset 0 0 5px rgba(255, 0, 60, 0.2) !important;
+}
+
+/* 2. TEMAYI DEĞİŞTİR (BEYAZ) */
+body.cyberpunk #themeToggle {
+    color: #ffffff !important;
+    border: 1px solid #ffffff !important;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2), inset 0 0 5px rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 3. FİYATLARI DÜZENLE (GRİ) */
+body.cyberpunk #openSettings {
+    color: #888888 !important;
+    border: 1px dashed #444444 !important;
+    text-shadow: none;
+    box-shadow: none !important;
+}
+
+/* TOPLAM BARI ÖZEL (TURKUAZ) */
 body.cyberpunk #totalContainer {
     background-color: var(--cp-dark-bg) !important;
     border: 1px solid var(--cp-cyan) !important;
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2), inset 0 0 5px rgba(0, 255, 255, 0.1) !important;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3) !important;
+    color: var(--cp-cyan) !important;
 }
 
 body.cyberpunk .total-label,
 body.cyberpunk .total-amount-box {
     color: var(--cp-cyan) !important;
-    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
 }
 
-/* METİN VE SAYILAR */
-body.cyberpunk #drinkName, body.cyberpunk .amount { color: var(--cp-red); }
+/* İÇERİK METİNLERİ */
+body.cyberpunk #drinkName, 
+body.cyberpunk .amount { 
+    color: var(--cp-red); 
+    display: flex;
+    align-items: center; 
+}
+
 body.cyberpunk .amount.active-count {
     color: var(--cp-cyan) !important;
     text-shadow: 0 0 12px var(--cp-cyan);
 }
 
-/* İKON PARLAMALARI (GLOW) */
+/* İKON VE ÜRÜN ÇERÇEVELERİ */
+body.cyberpunk .itemContainer {
+    border: 1px solid var(--cp-red) !important;
+}
+
 body.cyberpunk #itemImage {
-    filter: drop-shadow(0 0 5px rgba(255, 0, 60, 0.5)) brightness(1.1);
-    background: radial-gradient(circle, rgba(255, 0, 60, 0.1) 0%, transparent 70%);
-    padding: 5px;
+    filter: drop-shadow(0 0 5px rgba(255, 0, 60, 0.6)) brightness(1.1);
+    background: radial-gradient(circle, rgba(255, 0, 60, 0.15) 0%, transparent 70%);
 }
 
 /* Aktif üründe ikon parlaması Turkuaz olur */
 body.cyberpunk .itemContainer:has(.active-count) #itemImage {
     filter: drop-shadow(0 0 8px var(--cp-cyan)) brightness(1.2);
-    background: radial-gradient(circle, rgba(0, 255, 255, 0.15) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(0, 255, 255, 0.2) 0%, transparent 70%);
 }
 
-/* BUTONLAR (+ / -) */
+/* ÜRÜN İÇİ BUTONLAR (+ / -) */
 body.cyberpunk #add {
     background: transparent; color: var(--cp-cyan);
     border-left: 1px solid #80001e; border-bottom: 1px solid #80001e;
-    text-shadow: 0 0 8px var(--cp-cyan);
 }
 
 body.cyberpunk #sub {
@@ -230,15 +282,13 @@ body.cyberpunk #sub {
     border-left: 1px solid #80001e;
 }
 
-/* MODAL CYBERPUNK */
-body.cyberpunk .modal-content {
-    background-color: var(--cp-dark-bg);
-    border: 2px solid var(--cp-red);
-    clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
-}
-
-body.cyberpunk .danger-btn, body.cyberpunk .cancel-btn {
-    background: transparent; border: 1px solid var(--cp-red); color: var(--cp-red); border-radius: 0;
+/* MODAL / ONAY BUTONLARI */
+body.cyberpunk .danger-btn, 
+body.cyberpunk .cancel-btn {
+    background: transparent; 
+    border: 1px solid var(--cp-red); 
+    color: var(--cp-red) !important; 
+    border-radius: 0;
     clip-path: polygon(10px 0, 100% 0, 100% 70%, 90% 100%, 0 100%);
 }
-body.cyberpunk .cancel-btn { border-color: var(--cp-cyan); color: var(--cp-cyan); }
+body.cyberpunk .cancel-btn { border-color: var(--cp-cyan); color: var(--cp-cyan) !important; }
