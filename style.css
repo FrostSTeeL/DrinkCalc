@@ -215,10 +215,6 @@ body.cyberpunk .amount {
     color: var(--cp-red); 
 }
 
-body.cyberpunk .amount.active-count {
-    color: var(--cp-cyan); 
-}
-
 body.cyberpunk #add {
     background-color: transparent;
     border: none;
