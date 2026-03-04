@@ -1,6 +1,5 @@
 :root {
     touch-action: pan-x pan-y;
-    /* Removed height: 100% here so it doesn't restrict mobile scrolling */
     user-select: none;
     white-space: nowrap;
     -webkit-touch-callout: none;
@@ -13,7 +12,7 @@ body {
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
-    padding: 10px; /* This padding provides the small distance from the screen edges */
+    padding: 25px;
     background-color: rgb(68, 68, 68);
     box-sizing: border-box;
 }
@@ -22,9 +21,9 @@ body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    width: 100%; /* Stretches items to be wider */
-    max-width: 600px; /* Prevents it from looking stretched out on a desktop monitor */
-    padding-bottom: 40px; /* Guaranteed breathing room at the bottom of the page */
+    width: 100%;
+    max-width: 500px;
+    padding-bottom: 60px;
     gap: 25px;
     box-sizing: border-box;
 }
@@ -98,7 +97,7 @@ body {
     background-color: rgb(194, 0, 0);
     border-radius: 15px;
     border: none;
-    height: 60px; /* Fixed, touch-friendly height */
+    height: 60px;
     color: white;
     font-size: 25px;
     font-weight: bold;
