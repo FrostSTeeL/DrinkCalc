@@ -243,7 +243,12 @@ body.cyberpunk .total-amount-box {
 }
 
 /* İÇERİK METİNLERİ */
-body.cyberpunk #drinkName, 
+body.cyberpunk #drinkName { 
+    color: var(--cp-red) !important; /* Beyazı kırmızıya zorlar */
+    display: flex;
+    align-items: center; 
+    text-shadow: 0 0 5px rgba(255, 0, 60, 0.5); /* Hafif kırmızı neon efekti (opsiyonel) */
+}, 
 body.cyberpunk .amount { 
     color: var(--cp-red); 
     display: flex;
