@@ -1,149 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Drink Tracker</title>
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="style.css?v=1.7">
+    <link rel="stylesheet" href="style.css?v=2.0">
 </head>
-
-<body onload="javascript:StartFunc()">
+<body>
     <div id="mainContainer">
         <div id="totalContainer">
-            <span class="total-label">TOTAL</span>
+            <span class="total-label">TOPLAM</span>
             <div class="total-amount-box">
-                <span id="totalPrice">0.00</span><span class="currency"> ₺</span>
+                <span id="totalPrice">0.00</span>
             </div>
         </div>
-        <div class="itemContainer" id="Beer">
+
+        <div class="itemContainer">
             <img src="img/beer.png" id="itemImage">
-            <p id="drinkName">Beer</p>
-            <p id="beerAmount" , class="amount">0</p>
+            <p id="beerName">Beer</p>
+            <p id="beerAmount" class="amount">0</p>
             <div id="buttonContainer">
-                <button onclick="appendToDrink(beerAmount)" , id="add">+</button>
-                <button onclick="deductFromDrink(beerAmount)" , id="sub">-</button>
+                <button onclick="appendToDrink(beerAmount)" id="add">+</button>
+                <button onclick="deductFromDrink(beerAmount)" id="sub">-</button>
             </div>
-
         </div>
 
-        <div class="itemContainer" id="Gin">
+        <div class="itemContainer">
             <img src="img/gin-tonic.png" id="itemImage">
-            <p id="drinkName">Gin</p>
-            <p id="ginAmount" , class="amount">0</p>
+            <p id="ginName">Gin</p>
+            <p id="ginAmount" class="amount">0</p>
             <div id="buttonContainer">
-                <button onclick="appendToDrink(ginAmount)" , id="add">+</button>
-                <button onclick="deductFromDrink(ginAmount)" , id="sub">-</button>
+                <button onclick="appendToDrink(ginAmount)" id="add">+</button>
+                <button onclick="deductFromDrink(ginAmount)" id="sub">-</button>
             </div>
-
         </div>
 
-        <div class="itemContainer" id="Cocktail">
+        <div class="itemContainer">
             <img src="img/cocktail.png" id="itemImage">
-            <p id="drinkName">Cocktail</p>
-            <p id="cocktailAmount" , class="amount">0</p>
+            <p id="cocktailName">Cocktail</p>
+            <p id="cocktailAmount" class="amount">0</p>
             <div id="buttonContainer">
-                <button onclick="appendToDrink(cocktailAmount)" , id="add">+</button>
-                <button onclick="deductFromDrink(cocktailAmount)" , id="sub">-</button>
+                <button onclick="appendToDrink(cocktailAmount)" id="add">+</button>
+                <button onclick="deductFromDrink(cocktailAmount)" id="sub">-</button>
             </div>
-
         </div>
 
-        <div class="itemContainer" id="Shot">
+        <div class="itemContainer">
             <img src="img/shot.png" id="itemImage">
-            <p id="drinkName">Shot</p>
-            <p id="shotAmount" , class="amount">0</p>
+            <p id="shotName">Shot</p>
+            <p id="shotAmount" class="amount">0</p>
             <div id="buttonContainer">
-                <button onclick="appendToDrink(shotAmount)" , id="add">+</button>
-                <button onclick="deductFromDrink(shotAmount)" , id="sub">-</button>
+                <button onclick="appendToDrink(shotAmount)" id="add">+</button>
+                <button onclick="deductFromDrink(shotAmount)" id="sub">-</button>
             </div>
-
         </div>
 
-        <div class="itemContainer" id="Water">
+        <div class="itemContainer">
             <img src="img/water.png" id="itemImage">
-            <p id="drinkName">Water</p>
-            <p id="waterAmount" , class="amount">0</p>
+            <p id="waterName">Water</p>
+            <p id="waterAmount" class="amount">0</p>
             <div id="buttonContainer">
-                <button onclick="appendToDrink(waterAmount)" , id="add">+</button>
-                <button onclick="deductFromDrink(waterAmount)" , id="sub">-</button>
+                <button onclick="appendToDrink(waterAmount)" id="add">+</button>
+                <button onclick="deductFromDrink(waterAmount)" id="sub">-</button>
             </div>
-
         </div>
 
-        <div class="itemContainer" id="Nuts">
+        <div class="itemContainer">
             <img src="img/cashew.png" id="itemImage">
-            <p id="drinkName">Nuts</p>
-            <p id="nutsAmount" , class="amount">0</p>
+            <p id="nutsName">Nuts</p>
+            <p id="nutsAmount" class="amount">0</p>
             <div id="buttonContainer">
-                <button onclick="appendToDrink(nutsAmount)" , id="add">+</button>
-                <button onclick="deductFromDrink(nutsAmount)" , id="sub">-</button>
+                <button onclick="appendToDrink(nutsAmount)" id="add">+</button>
+                <button onclick="deductFromDrink(nutsAmount)" id="sub">-</button>
             </div>
-
         </div>
 
-        <div class="itemContainer" id="Popcorn">
+        <div class="itemContainer">
             <img src="img/popcorn.png" id="itemImage">
-            <p id="drinkName">PopCorn</p>
-            <p id="pCornAmount" , class="amount">0</p>
+            <p id="pCornName">PopCorn</p>
+            <p id="pCornAmount" class="amount">0</p>
             <div id="buttonContainer">
-                <button onclick="appendToDrink(pCornAmount)" , id="add">+</button>
-                <button onclick="deductFromDrink(pCornAmount)" , id="sub">-</button>
+                <button onclick="appendToDrink(pCornAmount)" id="add">+</button>
+                <button onclick="deductFromDrink(pCornAmount)" id="sub">-</button>
             </div>
-
         </div>
 
-        <div class="itemContainer" id="Pickles">
+        <div class="itemContainer">
             <img src="img/pickles.png" id="itemImage">
-            <p id="drinkName">Pickles</p>
-            <p id="picklesAmount" , class="amount">0</p>
+            <p id="picklesName">Pickles</p>
+            <p id="picklesAmount" class="amount">0</p>
             <div id="buttonContainer">
-                <button onclick="appendToDrink(picklesAmount)" , id="add">+</button>
-                <button onclick="deductFromDrink(picklesAmount)" , id="sub">-</button>
+                <button onclick="appendToDrink(picklesAmount)" id="add">+</button>
+                <button onclick="deductFromDrink(picklesAmount)" id="sub">-</button>
             </div>
-
         </div>
 
-
-        <div class="itemContainer" id="Food">
+        <div class="itemContainer">
             <img src="img/food.png" id="itemImage">
-            <p id="drinkName">Food</p>
-            <p id="foodAmount" , class="amount">0</p>
+            <p id="foodName">Food</p>
+            <p id="foodAmount" class="amount">0</p>
             <div id="buttonContainer">
-                <button onclick="appendToDrink(foodAmount)" , id="add">+</button>
-                <button onclick="deductFromDrink(foodAmount)" , id="sub">-</button>
+                <button onclick="appendToDrink(foodAmount)" id="add">+</button>
+                <button onclick="deductFromDrink(foodAmount)" id="sub">-</button>
             </div>
-
         </div>
 
-        <div class="itemContainer" id="Fries">
+        <div class="itemContainer">
             <img src="img/fries.png" id="itemImage">
-            <p id="drinkName">Fries</p>
-            <p id="friesAmount" , class="amount">0</p>
+            <p id="friesName">Fries</p>
+            <p id="friesAmount" class="amount">0</p>
             <div id="buttonContainer">
-                <button onclick="appendToDrink(friesAmount)" , id="add">+</button>
-                <button onclick="deductFromDrink(friesAmount)" , id="sub">-</button>
+                <button onclick="appendToDrink(friesAmount)" id="add">+</button>
+                <button onclick="deductFromDrink(friesAmount)" id="sub">-</button>
             </div>
-
         </div>
 
-        <button onclick="ClearStorage()" , id="clearButton">Clear</button>
-        <button id="themeToggle">SWITCH TO CYBERPUNK</button>
-
-        <button id="openSettings">Adjust Prices</button>
+        <button id="clearButton">LİSTEYİ TEMİZLE</button>
+        <button id="themeToggle">TEMAYI DEĞİŞTİR</button>
+        <button id="openSettings">FİYATLARI DÜZENLE</button>
 
         <div id="settingsModal" class="modal">
             <div class="modal-content">
-                <h3>Prices (₺)</h3>
-                <hr style="border: 0.5px solid #444; margin-bottom: 15px;">
-                <div id="settingsGrid">
-                    </div>
-                <button id="closeSettings">Save and Close</button>
+                <h3>Birim Fiyatlar (₺)</h3>
+                <div id="settingsGrid"></div>
+                <button id="closeSettings">KAYDET VE KAPAT</button>
+            </div>
+        </div>
+
+        <div id="clearModal" class="modal">
+            <div class="modal-content">
+                <h3 id="clearTitle">EMİN MİSİNİZ?</h3>
+                <p id="clearText">Tüm liste ve tutar sıfırlanacak.</p>
+                <div class="modal-buttons">
+                    <button id="confirmClear" class="danger-btn">EVET, SIFIRLA</button>
+                    <button id="cancelClear" class="cancel-btn">İPTAL</button>
+                </div>
             </div>
         </div>
     </div>
-    <script src="index.js"></script>
+    <script src="index.js?v=2.0"></script>
 </body>
-
 </html>
