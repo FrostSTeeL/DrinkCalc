@@ -1,295 +1,102 @@
 :root {
     touch-action: pan-x pan-y;
     user-select: none;
-    white-space: nowrap;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    
-    /* Authentic Cyberpunk UI Palette */
+    -webkit-tap-highlight-color: transparent;
     --cp-red: #ff003c;
     --cp-cyan: #00ffff;
     --cp-dark-bg: #050102;
     --cp-panel-bg: rgba(255, 0, 60, 0.05);
 }
 
-/* =========================================
-   1. SHARED LAYOUT
-   ========================================= */
-
 body {
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
-    padding: 20px; 
-    box-sizing: border-box;
+    margin: 0; display: flex; justify-content: center; align-items: flex-start;
+    min-height: 100vh; padding: 20px; box-sizing: border-box;
+    background-color: rgb(68, 68, 68); font-family: sans-serif;
     transition: background-color 0.4s ease;
 }
 
-#mainContainer {
-    display: grid;
-    grid-template-columns: 1fr;
-    width: 100%; 
-    max-width: 500px; 
-    padding-bottom: 40px; 
-    box-sizing: border-box;
-}
+#mainContainer { width: 100%; max-width: 500px; display: flex; flex-direction: column; }
 
-/* STICKY TOTAL HEADER */
+/* TOPLAM BAR */
 #totalContainer {
-    position: sticky;
-    top: 10px;
-    z-index: 100;
-    background-color: #2f7c7c; 
-    padding: 12px 20px;
-    border-radius: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    border: 2px solid rgba(255,255,255,0.1);
-    color: white;
+    position: sticky; top: 10px; z-index: 100;
+    background-color: #2f7c7c; padding: 15px 20px; border-radius: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.1); color: white;
 }
+.total-label { font-size: 14px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; }
+.total-amount-box { font-size: 24px; font-weight: 800; }
 
-.total-label {
-    font-size: 14px;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
-
-.total-amount-box {
-    font-size: 24px;
-    font-weight: 800;
-}
-
-/* ITEM LIST */
+/* ÜRÜN KARTLARI */
 .itemContainer {
-    display: grid;
-    grid-template-columns: 85px 1fr 50px 55px; 
-    box-sizing: border-box;
-    margin-bottom: 15px;
-    border-radius: 15px;
-    overflow: hidden; 
-    height: 90px;
+    display: grid; grid-template-columns: 80px 1fr 50px 60px;
+    background-color: #2f7c7c; color: white; margin-bottom: 12px;
+    border-radius: 15px; height: 90px; overflow: hidden;
 }
+#itemImage { width: 45px; align-self: center; margin-left: 15px; }
+#drinkName { font-size: 16px; align-self: center; text-transform: uppercase; margin: 0; }
+.amount { font-size: 26px; text-align: right; align-self: center; padding-right: 15px; margin: 0; }
 
-#itemImage {
-    width: 50px;
-    align-self: center;
-    margin-left: 15px;
-}
-
-#drinkName {
-    font-size: 18px;
-    align-self: center;
-    text-transform: uppercase;
-}
-
-.amount {
-    font-size: 28px;
-    text-align: right;
-    align-self: center; 
-    padding-right: 15px;
-}
-
-/* BUTTONS */
-#buttonContainer {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-}
-
-#add, #sub {
-    border: none;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: bold;
-    transition: transform 0.1s;
-}
-
-#add:active, #sub:active { transform: scale(0.9); }
-
-/* =========================================
-   2. CLASSIC THEME (Default Light)
-   ========================================= */
-
-body { background-color: rgb(68, 68, 68); font-family: sans-serif; }
-
-.itemContainer {
-    background-color: #2f7c7c;
-    color: white;
-}
-
-#add { background-color: #6bf16b; color: white; }
-#sub { background-color: #f16b6b; color: white; }
+/* BUTONLAR */
+#buttonContainer { display: grid; grid-template-rows: 1fr 1fr; }
+#add, #sub { border: none; cursor: pointer; font-size: 22px; font-weight: bold; color: white; }
+#add { background-color: #6bf16b; }
+#sub { background-color: #f16b6b; }
 
 #themeToggle, #clearButton, #openSettings {
-    width: 100%;
-    padding: 15px;
-    margin-top: 10px;
-    border-radius: 10px;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
+    width: 100%; padding: 15px; margin-top: 10px; border-radius: 10px;
+    border: none; font-weight: bold; cursor: pointer; text-transform: uppercase;
 }
-
 #clearButton { background-color: #c20000; color: white; }
 #themeToggle { background-color: #eee; color: #333; }
-#openSettings { background: transparent; border: 1px dashed #ccc; color: #ccc; }
+#openSettings { background: transparent; border: 1px dashed #888; color: #888; font-size: 12px; letter-spacing: 1px; }
 
-/* CLASSIC DARK MODE (50% Darker) */
+/* MODALLAR */
+.modal {
+    display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+}
+.modal-content {
+    background-color: #1a1a1a; margin: 15% auto; padding: 25px; width: 80%;
+    max-width: 350px; border-radius: 20px; color: white; text-align: center;
+}
+#settingsGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+.price-item { display: flex; flex-direction: column; align-items: flex-start; }
+.price-item label { font-size: 10px; color: #888; text-transform: uppercase; margin-bottom: 4px; }
+.price-item input { width: 100%; padding: 8px; background: #000; border: 1px solid #444; color: #fff; border-radius: 5px; }
+#closeSettings, .danger-btn, .cancel-btn { cursor: pointer; padding: 12px; border: none; border-radius: 8px; font-weight: bold; }
+#closeSettings { width: 100%; background: #1b4d4d; color: white; }
+.modal-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+.danger-btn { background: #c20000; color: white; }
+.cancel-btn { background: #444; color: white; }
+
+/* CLASSIC DARK MODE (SİSTEM) */
 @media (prefers-color-scheme: dark) {
     body:not(.cyberpunk) { background-color: #080808; }
-    
-    body:not(.cyberpunk) .itemContainer {
-        background-color: #0a2424;
-        border: 1px solid #143333;
-    }
-
-    body:not(.cyberpunk) #itemImage {
-        filter: brightness(0.7) contrast(1.1);
-    }
-
+    body:not(.cyberpunk) .itemContainer { background-color: #0a2424; border: 1px solid #143333; }
+    body:not(.cyberpunk) #itemImage { filter: brightness(0.7) contrast(1.1); }
     body:not(.cyberpunk) #add { background-color: #1e6b1e; }
     body:not(.cyberpunk) #sub { background-color: #7a1f1f; }
-    
-    body:not(.cyberpunk) .amount.active-count { color: #6bf16b; }
 }
 
-/* =========================================
-   3. CYBERPUNK THEME
-   ========================================= */
-
-body.cyberpunk {
-    background-color: var(--cp-dark-bg);
-    background-image: 
-        linear-gradient(rgba(255, 0, 60, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 0, 60, 0.02) 1px, transparent 1px);
-    background-size: 20px 20px;
-}
-
+/* CYBERPUNK THEME */
+body.cyberpunk { background-color: var(--cp-dark-bg); }
 body.cyberpunk #totalContainer {
-    /* 1. Solid background to block out scrolling elements */
-    background-color: var(--cp-dark-bg); 
-    
-    /* 2. Sharp Cyan frame and HUD accent */
-    border: 1px solid var(--cp-cyan);
-    border-left: 5px solid var(--cp-cyan); 
-    
-    border-radius: 0;
-    /* Angular tech cut */
-    clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
-    
-    /* 3. Outer glow to make the solid box "pop" */
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.9);
-    
-    /* Ensure no transparency at all */
-    opacity: 1;
+    background-color: var(--cp-dark-bg); border: 1px solid var(--cp-cyan);
+    border-left: 5px solid var(--cp-cyan); border-radius: 0;
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 95% 100%, 0 100%);
 }
-
-body.cyberpunk .total-label {
-    /* Matches item text color */
-    color: var(--cp-red); 
-    text-transform: uppercase;
-    font-family: 'Arial', sans-serif;
-    letter-spacing: 2px;
-}
-
-body.cyberpunk .total-amount-box {
-    /* Matches item text color */
-    color: var(--cp-red);
-    font-weight: 800;
-    /* Subtle red glow instead of cyan */
-    text-shadow: 0 0 5px rgba(255, 0, 60, 0.3);
-}
-
 body.cyberpunk .itemContainer {
-    background-color: var(--cp-panel-bg);
-    border: 1px solid #80001e;
-    border-radius: 0;
+    background-color: var(--cp-panel-bg); border: 1px solid #80001e; border-radius: 0;
     clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
 }
-
-body.cyberpunk #drinkName, body.cyberpunk .amount { color: #cc0030; }
-body.cyberpunk .amount.active-count { color: var(--cp-cyan); }
-
-body.cyberpunk #add {
-    background: transparent;
-    border-left: 1px solid #80001e;
-    border-bottom: 1px solid #80001e;
-    color: var(--cp-cyan);
+body.cyberpunk #drinkName, body.cyberpunk .amount, body.cyberpunk .total-label, body.cyberpunk .total-amount-box { color: var(--cp-red); }
+body.cyberpunk .amount.active-count { color: var(--cp-cyan); text-shadow: 0 0 8px var(--cp-cyan); }
+body.cyberpunk #add { background: transparent; color: var(--cp-cyan); border-left: 1px solid #80001e; border-bottom: 1px solid #80001e; }
+body.cyberpunk #sub { background: transparent; color: #80001e; border-left: 1px solid #80001e; }
+body.cyberpunk #themeToggle, body.cyberpunk #clearButton, body.cyberpunk #openSettings, body.cyberpunk .danger-btn, body.cyberpunk .cancel-btn {
+    background: transparent; border: 1px solid var(--cp-red); color: var(--cp-red); border-radius: 0;
+    clip-path: polygon(10px 0, 100% 0, 100% 70%, 90% 100%, 0 100%);
 }
-
-body.cyberpunk #sub {
-    background: transparent;
-    border-left: 1px solid #80001e;
-    color: #80001e;
-}
-
-body.cyberpunk #themeToggle, body.cyberpunk #clearButton, body.cyberpunk #openSettings {
-    border-radius: 0;
-    background: transparent;
-    border: 1px solid var(--cp-red);
-    color: var(--cp-red);
-    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-}
-
-/* =========================================
-   4. MODAL SETTINGS
-   ========================================= */
-
-.modal {
-    display: none; 
-    position: fixed;
-    z-index: 1000;
-    left: 0; top: 0; width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.85);
-    backdrop-filter: blur(8px);
-}
-
-.modal-content {
-    background-color: #1a1a1a;
-    margin: 10% auto;
-    padding: 25px;
-    width: 85%;
-    max-width: 350px;
-    border-radius: 20px;
-    border: 1px solid #333;
-    text-align: center;
-    color: #efefef;
-}
-
-#settingsGrid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-bottom: 25px;
-}
-
-.price-item label { font-size: 10px; color: #888; display: block; text-align: left; }
-.price-item input {
-    width: 100%;
-    padding: 8px;
-    background: #000;
-    border: 1px solid #444;
-    color: #fff;
-    border-radius: 5px;
-}
-
-#closeSettings {
-    width: 100%;
-    padding: 12px;
-    background: #1b4d4d;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-}
-
-/* Cyberpunk Modal Overrides */
-body.cyberpunk .modal-content {
-    background-color: #050102;
-    border: 2px solid var(--cp-red);
-    clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
-}
+body.cyberpunk .cancel-btn { border-color: var(--cp-cyan); color: var(--cp-cyan); }
