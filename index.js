@@ -1,191 +1,160 @@
 /* =========================================
-   1. GLOBAL VARIABLES & PRICE SETUP
+   1. DİL VE ÇEVİRİ AYARLARI
    ========================================= */
-
-// Item IDs as they appear in your HTML
-const itemIds = [
-    "beerAmount", "ginAmount", "cocktailAmount", "shotAmount", 
-    "waterAmount", "nutsAmount", "pCornAmount", "picklesAmount", 
-    "foodAmount", "friesAmount"
-];
-
-// Default Turkish Lira Prices
-const defaultPrices = {
-    beerAmount: 150, ginAmount: 350, cocktailAmount: 400, 
-    shotAmount: 100, waterAmount: 40, nutsAmount: 60, 
-    pCornAmount: 80, picklesAmount: 50, foodAmount: 450, friesAmount: 150
+const translations = {
+    tr: {
+        total: "TOPLAM", editPrices: "FİYATLARI DÜZENLE", clearList: "LİSTEYİ TEMİZLE",
+        switchTheme: "TEMAYI DEĞİŞTİR", modalTitle: "BİRİM FİYATLAR (₺)", saveClose: "KAYDET VE KAPAT",
+        confirmTitle: "EMİN MİSİNİZ?", confirmDesc: "Tüm liste ve tutar sıfırlanacak.",
+        confirmYes: "EVET, SIFIRLA", confirmNo: "İPTAL",
+        items: { beer: "BİRA", gin: "CİN", cocktail: "KOKTEYL", shot: "SHOT", water: "SU", nuts: "ÇEREZ", pCorn: "PATLAMIŞ MISIR", pickles: "TURŞU", food: "YEMEK", fries: "PATATES" }
+    },
+    en: {
+        total: "TOTAL", editPrices: "EDIT PRICES", clearList: "CLEAR LIST",
+        switchTheme: "SWITCH THEME", modalTitle: "UNIT PRICES (₺)", saveClose: "SAVE & CLOSE",
+        confirmTitle: "ARE YOU SURE?", confirmDesc: "All records and total will be reset.",
+        confirmYes: "YES, RESET", confirmNo: "CANCEL",
+        items: { beer: "BEER", gin: "GIN", cocktail: "COCKTAIL", shot: "SHOT", water: "WATER", nuts: "NUTS", pCorn: "POPCORN", pickles: "PICKLES", food: "FOOD", fries: "FRIES" }
+    }
 };
 
-// Load existing prices or use defaults
+const userLang = navigator.language.startsWith('tr') ? 'tr' : 'en';
+const lang = translations[userLang];
+
+/* =========================================
+   2. VERİ YÖNETİMİ
+   ========================================= */
+const itemIds = ["beerAmount", "ginAmount", "cocktailAmount", "shotAmount", "waterAmount", "nutsAmount", "pCornAmount", "picklesAmount", "foodAmount", "friesAmount"];
+const defaultPrices = { beerAmount: 150, ginAmount: 350, cocktailAmount: 400, shotAmount: 100, waterAmount: 40, nutsAmount: 60, pCornAmount: 80, picklesAmount: 50, foodAmount: 450, friesAmount: 150 };
+
 let itemPrices = JSON.parse(localStorage.getItem('itemPrices')) || defaultPrices;
 
-/* =========================================
-   2. CORE FUNCTIONS (Quantity & Storage)
-   ========================================= */
-
-function appendToDrink(drinkElement) {
-    let newNum = parseInt(drinkElement.textContent) || 0;
-    newNum++;
-    drinkElement.textContent = newNum;
-    localStorage.setItem(drinkElement.id, newNum);
-    // Math is updated automatically via the MutationObserver at the bottom
+function appendToDrink(el) {
+    let n = (parseInt(el.textContent) || 0) + 1;
+    el.textContent = n;
+    localStorage.setItem(el.id, n);
 }
 
-function deductFromDrink(drinkElement) {
-    let currentNum = parseInt(drinkElement.textContent) || 0;
-    if (currentNum > 0) {
-        let newNum = currentNum - 1;
-        drinkElement.textContent = newNum;
-        localStorage.setItem(drinkElement.id, newNum);
+function deductFromDrink(el) {
+    let n = parseInt(el.textContent) || 0;
+    if (n > 0) {
+        n--;
+        el.textContent = n;
+        localStorage.setItem(el.id, n);
     }
 }
-
-function StartFunc() {
-    // Load counts from LocalStorage
-    itemIds.forEach(id => {
-        const savedVal = localStorage.getItem(id);
-        const element = document.getElementById(id);
-        if (element) {
-            element.textContent = savedVal !== null ? savedVal : "0";
-        }
-    });
-
-    // If first time ever, initialize storage
-    if (localStorage.getItem("beerAmount") === null) {
-        itemIds.forEach(id => localStorage.setItem(id, "0"));
-    }
-    
-    calculateTotal();
-}
-
-function ClearStorage() {
-    const currentTheme = localStorage.getItem('theme');
-    localStorage.clear();
-    
-    // Put theme and prices back
-    if (currentTheme) localStorage.setItem('theme', currentTheme);
-    localStorage.setItem('itemPrices', JSON.stringify(itemPrices));
-
-    // Update UI instantly without refresh
-    itemIds.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-            el.textContent = "0";
-            el.classList.remove('active-count');
-        }
-    });
-    calculateTotal();
-}
-
-/* =========================================
-   3. CALCULATION & PRICE SETTINGS
-   ========================================= */
 
 function calculateTotal() {
     let total = 0;
     itemIds.forEach(id => {
-        const element = document.getElementById(id);
-        if (element) {
-            const quantity = parseInt(element.textContent) || 0;
-            const price = itemPrices[id] || 0;
-            total += quantity * price;
-        }
+        const el = document.getElementById(id);
+        if (el) total += (parseInt(el.textContent) || 0) * (itemPrices[id] || 0);
     });
-
-    const totalDisplay = document.getElementById("totalPrice");
-    if (totalDisplay) {
-        totalDisplay.textContent = total.toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+    const display = document.getElementById("totalPrice");
+    if (display) {
+        const formatter = new Intl.NumberFormat(userLang === 'tr' ? 'tr-TR' : 'en-US', {
+            style: 'currency', currency: 'TRY', minimumFractionDigits: 2
+        });
+        display.textContent = formatter.format(total).replace("TRY", "₺");
     }
+}
+
+/* =========================================
+   3. ARAYÜZ VE MODAL KONTROLÜ
+   ========================================= */
+function applyTranslations() {
+    document.querySelector('.total-label').textContent = lang.total;
+    document.getElementById('openSettings').textContent = lang.editPrices;
+    document.getElementById('clearButton').textContent = lang.clearList;
+    document.getElementById('closeSettings').textContent = lang.saveClose;
+    document.getElementById('clearTitle').textContent = lang.confirmTitle;
+    document.getElementById('clearText').textContent = lang.confirmDesc;
+    document.getElementById('confirmClear').textContent = lang.confirmYes;
+    document.getElementById('cancelClear').textContent = lang.confirmNo;
+    document.querySelector('#settingsModal h3').textContent = lang.modalTitle;
+
+    Object.keys(lang.items).forEach(key => {
+        const el = document.getElementById(key + "Name");
+        if (el) el.textContent = lang.items[key];
+    });
 }
 
 function setupPriceInputs() {
     const grid = document.getElementById('settingsGrid');
     if (!grid) return;
-    grid.innerHTML = ''; 
-    
+    grid.innerHTML = '';
     itemIds.forEach(id => {
-        const name = id.replace('Amount', '').toUpperCase();
-        const price = itemPrices[id] || 0;
-        
+        const labelKey = id.replace('Amount', '');
         const div = document.createElement('div');
         div.className = "price-item";
-        div.innerHTML = `
-            <label>${name}</label>
-            <input type="number" value="${price}" onchange="updatePrice('${id}', this.value)">
-        `;
+        div.innerHTML = `<label>${lang.items[labelKey] || labelKey}</label>
+                         <input type="number" value="${itemPrices[id]}" onchange="updatePrice('${id}', this.value)">`;
         grid.appendChild(div);
     });
 }
 
-function updatePrice(id, newPrice) {
-    itemPrices[id] = parseFloat(newPrice) || 0;
+function updatePrice(id, val) {
+    itemPrices[id] = parseFloat(val) || 0;
     localStorage.setItem('itemPrices', JSON.stringify(itemPrices));
     calculateTotal();
 }
 
 /* =========================================
-   4. THEME & MODAL LOGIC (Wait for DOM)
+   4. BAŞLATICI
    ========================================= */
-
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Initial Start
-    StartFunc();
+    applyTranslations();
 
-    // 2. Theme Toggle
-    const themeToggle = document.getElementById('themeToggle');
-    if (localStorage.getItem('theme') === 'cyberpunk') {
-        document.body.classList.add('cyberpunk');
-        themeToggle.innerText = 'SWITCH TO CLASSIC MODE';
-    }
-
-    themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('cyberpunk');
-        if (document.body.classList.contains('cyberpunk')) {
-            themeToggle.innerText = 'SWITCH TO CLASSIC MODE';
-            localStorage.setItem('theme', 'cyberpunk');
-        } else {
-            themeToggle.innerText = 'SWITCH TO CYBERPUNK MODE';
-            localStorage.setItem('theme', 'classic');
-        }
+    // Kayıtlı miktarları yükle
+    itemIds.forEach(id => {
+        const el = document.getElementById(id);
+        const saved = localStorage.getItem(id);
+        if (el) el.textContent = saved !== null ? saved : "0";
     });
 
-    // 3. Modal Controls
-    const modal = document.getElementById("settingsModal");
-    const openBtn = document.getElementById("openSettings");
-    const closeBtn = document.getElementById("closeSettings");
+    if (localStorage.getItem('theme') === 'cyberpunk') document.body.classList.add('cyberpunk');
 
-    if (openBtn) {
-        openBtn.onclick = () => {
-            setupPriceInputs();
-            modal.style.display = "block";
-        };
-    }
-
-    if (closeBtn) {
-        closeBtn.onclick = () => modal.style.display = "none";
-    }
-
-    window.onclick = (event) => {
-        if (event.target == modal) modal.style.display = "none";
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.textContent = lang.switchTheme;
+    themeToggle.onclick = () => {
+        document.body.classList.toggle('cyberpunk');
+        localStorage.setItem('theme', document.body.classList.contains('cyberpunk') ? 'cyberpunk' : 'classic');
     };
 
-    // 4. Automatic Color & Total Observer
-    // Watches for text changes so you don't have to manually call functions everywhere
-    const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-            const el = mutation.target;
-            const count = parseInt(el.textContent) || 0;
-            
-            // Handle color highlight
-            if (count > 0) el.classList.add('active-count');
-            else el.classList.remove('active-count');
-            
-            // Handle math update
+    // Modallar
+    const priceModal = document.getElementById("settingsModal");
+    const clearModal = document.getElementById("clearModal");
+
+    document.getElementById("openSettings").onclick = () => { setupPriceInputs(); priceModal.style.display = "block"; };
+    document.getElementById("closeSettings").onclick = () => priceModal.style.display = "none";
+    
+    document.getElementById("clearButton").onclick = () => clearModal.style.display = "block";
+    document.getElementById("cancelClear").onclick = () => clearModal.style.display = "none";
+    
+    document.getElementById("confirmClear").onclick = () => {
+        itemIds.forEach(id => { 
+            const el = document.getElementById(id); 
+            if(el) { el.textContent = "0"; localStorage.setItem(id, "0"); }
+        });
+        calculateTotal();
+        clearModal.style.display = "none";
+    };
+
+    // Sayı değiştiğinde toplamı otomatik hesapla ve rengi ayarla
+    const obs = new MutationObserver((mutations) => {
+        mutations.forEach(m => {
+            const count = parseInt(m.target.textContent) || 0;
+            if (count > 0) m.target.classList.add('active-count');
+            else m.target.classList.remove('active-count');
             calculateTotal();
         });
     });
 
-    document.querySelectorAll('.amount').forEach((amountEl) => {
-        observer.observe(amountEl, { childList: true });
+    document.querySelectorAll('.amount').forEach(el => {
+        obs.observe(el, { childList: true });
+        // İlk yükleme rengi
+        if (parseInt(el.textContent) > 0) el.classList.add('active-count');
     });
+
+    calculateTotal();
 });
