@@ -14,10 +14,9 @@ const counts = JSON.parse(localStorage.getItem('drinkCounts')) || {
 };
 
 window.onload = () => {
-    // Önce sıralamayı geri yükle
-    restoreOrder();
+    // Sıralama sistemini şimdilik kapattık, ama fonksiyon aşağıda duruyor
+    // restoreOrder(); 
     
-    // Sonra değerleri bas
     Object.keys(counts).forEach(id => {
         const el = document.getElementById(id);
         if(el) {
@@ -29,34 +28,7 @@ window.onload = () => {
 };
 
 /* =========================================
-   2. SIRALAMA KAYIT SİSTEMİ (KALICILIK)
-   ========================================= */
-function saveOrder() {
-    const items = [...document.querySelectorAll('.itemContainer')];
-    // Her bir container içindeki miktarın ID'sini referans alarak sırayı kaydet
-    const orderIds = items.map(item => item.querySelector('.amount').id);
-    localStorage.setItem('drinkOrder', JSON.stringify(orderIds));
-}
-
-function restoreOrder() {
-    const savedOrder = JSON.parse(localStorage.getItem('drinkOrder'));
-    if (!savedOrder) return;
-
-    const mainContainer = document.getElementById('mainContainer');
-    const clearBtn = document.getElementById('clearButton');
-
-    savedOrder.forEach(id => {
-        const amountEl = document.getElementById(id);
-        if (amountEl) {
-            const container = amountEl.closest('.itemContainer');
-            // Butonların hemen üstüne sırayla ekleyerek düzeni kur
-            mainContainer.insertBefore(container, clearBtn);
-        }
-    });
-}
-
-/* =========================================
-   3. HESAPLAMA MANTIĞI
+   2. HESAPLAMA MANTIĞI
    ========================================= */
 function appendToDrink(element) {
     const id = element.id;
@@ -96,52 +68,37 @@ function saveData() {
 }
 
 /* =========================================
-   4. SÜRÜKLE-BIRAK (HYBRID MOTOR)
-   ========================================= */
+   3. SÜRÜKLE-BIRAK SİSTEMİ (ŞU AN PASİF)
+   ========================================= 
+   NOT: Kaydırma (scroll) sorunu yaşamaman için 
+   event listener'lar devre dışı bırakıldı.
+   Açmak istersen yorum satırlarını kaldırabilirsin.
+*/
+
 const mainContainer = document.getElementById('mainContainer');
 let draggingElement = null;
 
-const startDrag = (target) => {
-    draggingElement = target.closest('.itemContainer');
-    if (draggingElement) draggingElement.classList.add('dragging');
-};
+// SÜRÜKLEME FONKSİYONLARI (Kullanıma Hazır)
+function saveOrder() {
+    const items = [...document.querySelectorAll('.itemContainer')];
+    const orderIds = items.map(item => item.querySelector('.amount').id);
+    localStorage.setItem('drinkOrder', JSON.stringify(orderIds));
+}
 
-const endDrag = () => {
-    if (draggingElement) {
-        draggingElement.classList.remove('dragging');
-        draggingElement = null;
-        saveOrder(); // Yerleştiği anda sırayı kaydet
-    }
-};
+function restoreOrder() {
+    const savedOrder = JSON.parse(localStorage.getItem('drinkOrder'));
+    if (!savedOrder) return;
+    const clearBtn = document.getElementById('clearButton');
+    savedOrder.forEach(id => {
+        const amountEl = document.getElementById(id);
+        if (amountEl) {
+            const container = amountEl.closest('.itemContainer');
+            mainContainer.insertBefore(container, clearBtn);
+        }
+    });
+}
 
-mainContainer.addEventListener('dragstart', (e) => startDrag(e.target));
-mainContainer.addEventListener('dragend', endDrag);
-
-mainContainer.addEventListener('touchstart', (e) => {
-    if (e.target.tagName !== 'BUTTON') startDrag(e.target);
-}, { passive: true });
-
-mainContainer.addEventListener('touchend', endDrag);
-
-const handleMove = (y) => {
-    if (!draggingElement) return;
-    const afterElement = getDragAfterElement(mainContainer, y);
-    const limit = document.getElementById('clearButton');
-
-    if (afterElement == null) mainContainer.insertBefore(draggingElement, limit);
-    else if (afterElement !== limit && !afterElement.classList.contains('modal')) {
-        mainContainer.insertBefore(draggingElement, afterElement);
-    }
-};
-
-mainContainer.addEventListener('dragover', (e) => { e.preventDefault(); handleMove(e.clientY); });
-mainContainer.addEventListener('touchmove', (e) => {
-    if (!draggingElement) return;
-    e.preventDefault();
-    handleMove(e.touches[0].clientY);
-}, { passive: false });
-
-function getDragAfterElement(container, y) {
+const getDragAfterElement = (container, y) => {
     const draggableElements = [...container.querySelectorAll('.itemContainer:not(.dragging)')];
     return draggableElements.reduce((closest, child) => {
         const box = child.getBoundingClientRect();
@@ -149,20 +106,54 @@ function getDragAfterElement(container, y) {
         if (offset < 0 && offset > closest.offset) return { offset: offset, element: child };
         else return closest;
     }, { offset: Number.NEGATIVE_INFINITY }).element;
-}
+};
+
+/* --- Event Listenerlar (PASİFİZE EDİLDİ) ---
+mainContainer.addEventListener('dragstart', (e) => {
+    draggingElement = e.target.closest('.itemContainer');
+    draggingElement.classList.add('dragging');
+});
+
+mainContainer.addEventListener('dragend', () => {
+    if (draggingElement) {
+        draggingElement.classList.remove('dragging');
+        draggingElement = null;
+        saveOrder();
+    }
+});
+
+mainContainer.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    const afterElement = getDragAfterElement(mainContainer, e.clientY);
+    const limit = document.getElementById('clearButton');
+    if (afterElement == null) mainContainer.insertBefore(draggingElement, limit);
+    else if (afterElement !== limit) mainContainer.insertBefore(draggingElement, afterElement);
+});
+-------------------------------------------- */
 
 /* =========================================
-   5. DİĞER FONKSİYONLAR (TEMA/MODAL)
+   4. TEMA VE MODAL KONTROLLERİ
    ========================================= */
-document.getElementById('themeToggle').onclick = () => document.body.classList.toggle('cyberpunk');
-document.getElementById('clearButton').onclick = () => document.getElementById('clearModal').style.display = 'block';
-document.getElementById('cancelClear').onclick = () => document.getElementById('clearModal').style.display = 'none';
+document.getElementById('themeToggle').onclick = () => {
+    document.body.classList.toggle('cyberpunk');
+};
+
+document.getElementById('clearButton').onclick = () => {
+    document.getElementById('clearModal').style.display = 'block';
+};
+
+document.getElementById('cancelClear').onclick = () => {
+    document.getElementById('clearModal').style.display = 'none';
+};
 
 document.getElementById('confirmClear').onclick = () => {
     Object.keys(counts).forEach(id => {
         counts[id] = 0;
         const el = document.getElementById(id);
-        if(el) { el.innerText = '0'; el.classList.remove('active-count'); }
+        if(el) {
+            el.innerText = '0';
+            el.classList.remove('active-count');
+        }
     });
     saveData();
     updateTotal();
