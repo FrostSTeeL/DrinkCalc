@@ -12,7 +12,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    height: 100vh;
+    min-height: 100vh; /* Allows the body to stretch past the screen edge */
     padding: 5px;
     background-color: rgb(68, 68, 68);
 }
@@ -27,11 +27,10 @@ body {
 
 .itemContainer {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 70px 1fr 40px 75px; /* Locks your columns for mobile */
     background-color: #2f7c7c;
     border-radius: 15px;
     filter: drop-shadow(5px 5px 4px #0000004b);
-    gap: 25px;
 }
 
 #itemImage {
@@ -41,22 +40,25 @@ body {
 }
 
 #drinkName {
-    font-size: x-large;
+    font-size: clamp(14px, 5vw, 24px); /* Dynamically scales font size */
     align-self: center;
     text-align: left;
     color: rgb(255, 255, 255);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adds '...' if text gets too long for the screen */
 }
 
 .amount {
     font-size: 30px;
     text-align: right;
+    align-self: center; /* Vertically centers the number */
     color: rgb(255, 255, 255);
 }
 
 #buttonContainer {
     display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    padding-left: 25px;
+    grid-template-columns: 1fr;
     justify-self: right;
 }
 
@@ -70,6 +72,8 @@ body {
     color: white;
     font-size: larger;
     font-weight: bolder;
+    cursor: pointer;
+    transition: transform 0.1s ease; /* Smooths the press animation */
 }
 
 #sub {
@@ -82,16 +86,25 @@ body {
     color: white;
     font-size: larger;
     font-weight: bolder;
+    cursor: pointer;
+    transition: transform 0.1s ease; /* Smooths the press animation */
 }
 
 #clearButton {
     background-color: rgb(194, 0, 0);
     border-radius: 15px;
     border: none;
-    height: 200%;
+    height: 200%; /* Kept your hardcoded height! */
+    margin-bottom: 30px; /* The breathing room at the bottom of the screen */
     color: white;
     font-size: 25px;
     font-weight: bold;
     filter: drop-shadow(5px 5px 4px #0000004b);
-    padding-bottom: 20px;
+    cursor: pointer;
+    transition: transform 0.1s ease; /* Smooths the press animation */
+}
+
+/* Adds a satisfying "click" down effect when tapping buttons */
+#add:active, #sub:active, #clearButton:active {
+    transform: scale(0.92);
 }
