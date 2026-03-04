@@ -4,6 +4,15 @@
     white-space: nowrap;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
+    
+    /* Cyberpunk Colors */
+    --neon-magenta: #FF00FF;
+    --neon-cyan: #00FFFF;
+    --neon-blue: #0088FF;
+    --neon-orange-red: #FF4400;
+    --neon-terminal-green: #70FF00;
+    --card-bg-dark: rgba(0, 0, 0, 0.7);
+    --body-bg-deep: rgb(15, 15, 20);
 }
 
 body {
@@ -12,41 +21,60 @@ body {
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
-    padding: 25px;
-    background-color: rgb(68, 68, 68);
+    padding: 20px; 
+    background-color: var(--body-bg-deep); /* Darker, slightly desaturated background */
     box-sizing: border-box;
+    /* Subtle scanline texture */
+    background-image: repeating-linear-gradient(
+        transparent 0px, 
+        rgba(255, 255, 255, 0.05) 1px, 
+        transparent 2px, 
+        transparent 3px
+    );
 }
 
 #mainContainer {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: 'Courier New', 'Courier', monospace; /* Futuristic/monospaced fallback */
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    width: 100%;
-    max-width: 500px;
-    padding-bottom: 60px;
+    width: 100%; 
+    max-width: 500px; 
+    padding-bottom: 40px; 
     gap: 25px;
     box-sizing: border-box;
 }
 
 .itemContainer {
     display: grid;
+    /* Maintain spacing fixed previously: image column 85px, etc. */
     grid-template-columns: 85px 1fr 40px 75px; 
-    background-color: #2f7c7c;
+    background-color: var(--card-bg-dark); /* Dark, semi-transparent black */
     border-radius: 15px;
-    filter: drop-shadow(5px 5px 4px #0000004b);
+    /* Complex, layered neon glow border */
+    border: 2px solid var(--neon-cyan);
+    box-shadow: 
+        0 0 10px var(--neon-cyan),
+        0 0 20px var(--neon-blue),
+        0 0 4px #000 inset;
 }
 
 #itemImage {
     width: 50px;
     align-self: center;
     margin-left: 15px;
+    /* Makes images look like digitized holographic projections */
+    filter: drop-shadow(0 0 5px var(--neon-cyan));
 }
 
 #drinkName {
     font-size: clamp(14px, 5vw, 24px); 
     align-self: center;
     text-align: left;
-    color: rgb(255, 255, 255);
+    color: var(--neon-cyan); /* Strong cyan text */
+    /* Neon glow effect */
+    text-shadow: 
+        0 0 5px var(--neon-cyan),
+        0 0 10px var(--neon-blue);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; 
@@ -56,7 +84,11 @@ body {
     font-size: 30px;
     text-align: right;
     align-self: center; 
-    color: rgb(255, 255, 255);
+    color: var(--neon-terminal-green); /* Green terminal color */
+    /* Strong green terminal glow */
+    text-shadow: 
+        0 0 5px var(--neon-terminal-green),
+        0 0 10px #70FF00;
 }
 
 #buttonContainer {
@@ -71,12 +103,17 @@ body {
     height: 50px;
     border-top-right-radius: 15px;
     border: none;
-    background-color: rgb(107, 241, 107);
-    color: white;
+    background-color: transparent; /* Dark background handled by card */
+    color: var(--neon-magenta); /* Saturated Magenta */
     font-size: larger;
     font-weight: bolder;
     cursor: pointer;
-    transition: transform 0.1s ease; 
+    transition: transform 0.1s ease, box-shadow 0.1s ease; 
+    /* Complex button glow */
+    box-shadow: 
+        0 0 10px var(--neon-magenta),
+        0 0 20px #FF00FF;
+    text-shadow: 0 0 5px #FFF;
 }
 
 #sub {
@@ -85,27 +122,60 @@ body {
     height: 50px;
     border-bottom-right-radius: 15px;
     border: none;
-    background-color: rgb(241, 107, 107);
-    color: white;
+    background-color: transparent; 
+    color: var(--neon-orange-red); /* Flickering Orange-Red */
     font-size: larger;
     font-weight: bolder;
     cursor: pointer;
-    transition: transform 0.1s ease; 
+    transition: transform 0.1s ease, box-shadow 0.1s ease; 
+    /* Button glow */
+    box-shadow: 
+        0 0 10px var(--neon-orange-red),
+        0 0 20px #FF0000;
+    text-shadow: 0 0 5px #FFF;
 }
 
 #clearButton {
-    background-color: rgb(194, 0, 0);
+    background-color: transparent;
     border-radius: 15px;
     border: none;
-    height: 60px;
-    color: white;
+    height: 60px; 
+    margin-bottom: 30px; 
+    color: var(--neon-blue); /* Electric Blue/Cyan */
     font-size: 25px;
     font-weight: bold;
-    filter: drop-shadow(5px 5px 4px #0000004b);
     cursor: pointer;
-    transition: transform 0.1s ease; 
+    transition: transform 0.1s ease, box-shadow 0.1s ease; 
+    text-transform: uppercase; /* Cyberpunk aesthetic choice */
+    /* Massive, layered Clear button glow */
+    box-shadow: 
+        0 0 15px var(--neon-blue),
+        0 0 30px #00FFFF;
+    text-shadow: 
+        0 0 5px var(--neon-blue),
+        0 0 10px #00FFFF;
 }
 
+/* Add tactile, satisfying "click" effects for touch input */
 #add:active, #sub:active, #clearButton:active {
     transform: scale(0.92);
+}
+
+/* Keyframes for subtle flickering on the Clear button, like a dynamic sign */
+@keyframes flicker {
+  0%   { opacity: 1; }
+  10%  { opacity: 0.8; }
+  20%  { opacity: 1; }
+  30%  { opacity: 0.9; }
+  40%  { opacity: 1; }
+  50%  { opacity: 1; }
+  60%  { opacity: 0.9; }
+  70%  { opacity: 1; }
+  80%  { opacity: 0.8; }
+  90%  { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+#clearButton:hover {
+    animation: flicker 1s infinite alternate;
 }
