@@ -95,3 +95,25 @@ themeToggle.addEventListener('click', () => {
     }
 });
 
+// This observer handles the color switching automatically
+const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        const el = mutation.target;
+        const count = parseInt(el.textContent);
+        
+        if (count > 0) {
+            el.classList.add('active-count');
+        } else {
+            el.classList.remove('active-count');
+        }
+    });
+});
+
+// Start watching every drink/food amount
+document.querySelectorAll('.amount').forEach((amountEl) => {
+    // Run once on load to catch existing numbers from localStorage
+    if (parseInt(amountEl.textContent) > 0) amountEl.classList.add('active-count');
+    
+    // Watch for future changes
+    observer.observe(amountEl, { childList: true });
+});
