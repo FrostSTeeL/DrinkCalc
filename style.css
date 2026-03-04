@@ -208,6 +208,23 @@ body.cyberpunk .amount.active-count {
         /* Muted the red slightly */
         background-color: #5c2a2a; 
     }
+
+    /* 1. Dim the drink/food images so they don't pop too much */
+    body:not(.cyberpunk) #itemImage {
+        filter: brightness(0.7) contrast(1.1);
+        transition: filter 0.3s ease;
+    }
+
+    /* 2. Bring back some "Deep" color to the buttons so they aren't muddy */
+    body:not(.cyberpunk) #add {
+        background-color: #1e6b1e; /* Deeper, richer green */
+        color: rgba(255, 255, 255, 0.8); /* Slightly off-white text */
+    }
+
+    body:not(.cyberpunk) #sub {
+        background-color: #7a1f1f; /* Deeper, richer red */
+        color: rgba(255, 255, 255, 0.8);
+    }
 }
 
 /* =========================================
