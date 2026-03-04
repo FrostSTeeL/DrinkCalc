@@ -73,20 +73,21 @@ body {
 #buttonContainer {
     display: grid;
     grid-template-columns: 1fr;
-    justify-self: right;
-    gap: 5px; 
-    /* Removed the right padding so buttons sit perfectly flush */
-    padding: 5px 0px 5px 5px; 
+    grid-template-rows: 1fr 1fr; /* Perfectly splits the height 50/50 */
+    justify-self: stretch; /* Stretches to fill the column */
+    gap: 0px; /* Flush against each other */
+    padding: 0px; /* Flush against the container edges */
 }
 
 #add, #sub {
-    align-self: center;
+    align-self: stretch; /* Fills the grid cell vertically */
     width: 100%; 
-    height: 45px;
+    height: 100%;
     font-size: larger;
     font-weight: bolder;
     cursor: pointer;
     transition: all 0.2s ease; 
+    box-sizing: border-box;
 }
 
 #clearButton {
@@ -143,19 +144,19 @@ body {
 }
 
 #add {
-    border-radius: 0px 13px 0px 0px; /* Flush top right */
+    border-radius: 0px 13px 0px 0px; /* Perfectly hugs top-right */
     background-color: rgb(107, 241, 107); 
     color: white; 
-    border: 2px solid transparent;
+    border: none;
     box-shadow: none;
     text-shadow: none;
 }
 
 #sub {
-    border-radius: 0px 0px 13px 0px; /* Flush bottom right */
+    border-radius: 0px 0px 13px 0px; /* Perfectly hugs bottom-right */
     background-color: rgb(241, 107, 107); 
     color: white;
-    border: 2px solid transparent;
+    border: none;
     box-shadow: none;
     text-shadow: none;
 }
@@ -218,27 +219,35 @@ body.cyberpunk .amount {
 }
 
 body.cyberpunk #add {
-    /* 13px hugs the top right perfectly */
-    border-radius: 4px 13px 4px 4px; 
+    border-radius: 0px 13px 0px 0px; 
     background-color: rgba(0, 0, 0, 0.8); 
-    border: 2px solid var(--neon-terminal-green);
-    /* Remove the right border so it looks integrated into the container edge */
-    border-right: none; 
+    
+    /* Removed outer borders to prevent clipping, relying on internal lines */
+    border: none; 
+    border-left: 2px solid var(--neon-terminal-green);
+    border-bottom: 1px solid var(--neon-terminal-green);
+    
     color: var(--neon-terminal-green); 
     text-shadow: 0 0 5px var(--neon-terminal-green);
-    box-shadow: 0 0 8px rgba(112, 255, 0, 0.4);
+    
+    /* Switched to INSET shadow so the glow radiates inward and doesn't clip */
+    box-shadow: inset 0 0 10px rgba(112, 255, 0, 0.3);
 }
 
 body.cyberpunk #sub {
-    /* 13px hugs the bottom right perfectly */
-    border-radius: 4px 4px 13px 4px; 
+    border-radius: 0px 0px 13px 0px; 
     background-color: rgba(0, 0, 0, 0.8); 
-    border: 2px solid var(--neon-red-border);
-    /* Remove the right border so it looks integrated into the container edge */
-    border-right: none; 
+    
+    /* Internal borders only */
+    border: none;
+    border-left: 2px solid var(--neon-red-border);
+    border-top: 1px solid var(--neon-red-border);
+    
     color: var(--neon-red-border);
     text-shadow: 0 0 5px var(--neon-red-border);
-    box-shadow: 0 0 8px var(--neon-red-glow);
+    
+    /* Switched to INSET shadow */
+    box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.3);
 }
 
 body.cyberpunk #clearButton {
