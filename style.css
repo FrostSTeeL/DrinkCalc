@@ -320,3 +320,102 @@ body.cyberpunk #themeToggle {
 body.cyberpunk #themeToggle:active {
     background-color: rgba(0, 255, 255, 0.1);
 }
+
+
+/* Modal Background Overlay */
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.85);
+    backdrop-filter: blur(8px);
+}
+
+/* Modal Box */
+.modal-content {
+    background-color: #1a1a1a;
+    margin: 10% auto;
+    padding: 25px;
+    width: 85%;
+    max-width: 350px;
+    border-radius: 20px;
+    border: 1px solid #333;
+    text-align: center;
+    color: #efefef;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+#settingsGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+    max-height: 400px;
+    overflow-y: auto; /* Scrollable if you add many items */
+}
+
+.price-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.price-item label {
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+
+.price-item input {
+    width: 100%;
+    padding: 8px;
+    background: #000;
+    border: 1px solid #444;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#openSettings {
+    width: 100%;
+    background: transparent;
+    border: 1px solid #444;
+    color: #666;
+    padding: 12px;
+    margin-top: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 10px;
+}
+
+#closeSettings {
+    width: 100%;
+    padding: 12px;
+    background: #1b4d4d;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Cyberpunk Modal Overrides */
+body.cyberpunk .modal-content {
+    background-color: #050102;
+    border: 2px solid var(--cp-red);
+    clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+}
+
+body.cyberpunk .price-item input {
+    border: 1px solid var(--cp-cyan);
+    color: var(--cp-cyan);
+}
+
+body.cyberpunk #closeSettings {
+    background: transparent;
+    border: 1px solid var(--cp-cyan);
+    color: var(--cp-cyan);
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+}
