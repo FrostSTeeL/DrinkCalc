@@ -117,3 +117,45 @@ document.querySelectorAll('.amount').forEach((amountEl) => {
     // Watch for future changes
     observer.observe(amountEl, { childList: true });
 });
+
+
+
+// Add these to your price logic
+function calculateTotal() {
+    let total = 0;
+    Object.keys(itemPrices).forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            const quantity = parseInt(element.textContent) || 0;
+            const price = itemPrices[id];
+            total += quantity * price;
+        }
+    });
+    // Formats with TL symbol
+    document.getElementById("totalPrice").textContent = total.toLocaleString('tr-TR', { minimumFractionDigits: 2 });
+}
+
+function setupPriceInputs() {
+    const grid = document.getElementById('settingsGrid');
+    grid.innerHTML = ''; 
+    
+    for (const [id, price] of Object.entries(itemPrices)) {
+        const name = id.replace('Amount', '');
+        const div = document.createElement('div');
+        div.className = "price-item";
+        div.innerHTML = `
+            <label>${name}</label>
+            <input type="number" step="1" value="${price}" 
+                   onchange="changePrice('${id}', this.value)">
+        `;
+        grid.appendChild(div);
+    }
+}
+
+// Modal Toggle Logic
+const modal = document.getElementById("settingsModal");
+document.getElementById("openSettings").onclick = () => {
+    setupPriceInputs();
+    modal.style.display = "block";
+};
+document.getElementById("closeSettings").onclick = () => modal.style.display = "none";
