@@ -8,12 +8,12 @@
     /* Authentic Cyberpunk UI Palette */
     --cp-red: #ff003c;
     --cp-cyan: #00ffff;
-    --cp-dark-bg: #090204;
+    --cp-dark-bg: #050102;
     --cp-panel-bg: rgba(255, 0, 60, 0.05);
 }
 
 /* =========================================
-   1. SHARED LAYOUT (Applies to both themes)
+   1. SHARED LAYOUT
    ========================================= */
 
 body {
@@ -24,305 +24,194 @@ body {
     min-height: 100vh;
     padding: 20px; 
     box-sizing: border-box;
-    transition: background-color 0.4s ease, background-image 0.4s ease;
+    transition: background-color 0.4s ease;
 }
 
 #mainContainer {
     display: grid;
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: 1fr;
     width: 100%; 
     max-width: 500px; 
     padding-bottom: 40px; 
     box-sizing: border-box;
-    transition: gap 0.4s ease;
 }
 
+/* STICKY TOTAL HEADER */
+#totalContainer {
+    position: sticky;
+    top: 10px;
+    z-index: 100;
+    background-color: #2f7c7c; 
+    padding: 12px 20px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    border: 2px solid rgba(255,255,255,0.1);
+    color: white;
+}
+
+.total-label {
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.total-amount-box {
+    font-size: 24px;
+    font-weight: 800;
+}
+
+/* ITEM LIST */
 .itemContainer {
     display: grid;
     grid-template-columns: 85px 1fr 50px 55px; 
     box-sizing: border-box;
-    transition: all 0.4s ease;
+    margin-bottom: 15px;
+    border-radius: 15px;
     overflow: hidden; 
+    height: 90px;
 }
 
 #itemImage {
     width: 50px;
     align-self: center;
     margin-left: 15px;
-    transition: filter 0.4s ease;
 }
 
 #drinkName {
-    font-size: clamp(14px, 5vw, 22px); 
+    font-size: 18px;
     align-self: center;
-    text-align: left;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; 
-    transition: all 0.4s ease;
+    text-transform: uppercase;
 }
 
 .amount {
-    font-size: 30px;
+    font-size: 28px;
     text-align: right;
     align-self: center; 
-    padding-right: 15px; 
-    transition: all 0.4s ease;
+    padding-right: 15px;
 }
 
+/* BUTTONS */
 #buttonContainer {
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr; 
-    justify-self: stretch; 
-    gap: 0px; 
-    padding: 0px; 
+    grid-template-rows: 1fr 1fr;
 }
 
 #add, #sub {
-    align-self: stretch; 
-    width: 100%; 
-    height: 100%;
-    font-size: larger;
-    font-weight: bolder;
+    border: none;
     cursor: pointer;
-    transition: all 0.2s ease; 
-    box-sizing: border-box;
-}
-
-#clearButton {
-    height: 60px; 
-    margin-bottom: 10px; 
-    font-size: 25px;
+    font-size: 20px;
     font-weight: bold;
-    cursor: pointer;
-    transition: all 0.2s ease; 
-    width: 100%;
+    transition: transform 0.1s;
 }
 
-#themeToggle {
-    height: 50px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-bottom: 30px;
-    transition: all 0.4s ease;
-    width: 100%;
-}
-
-#add:active, #sub:active, #clearButton:active, #themeToggle:active {
-    transform: scale(0.92);
-}
+#add:active, #sub:active { transform: scale(0.9); }
 
 /* =========================================
-   2. CLASSIC THEME (Default)
+   2. CLASSIC THEME (Default Light)
    ========================================= */
 
-body {
-    background-color: rgb(68, 68, 68);
-    background-image: none;
-}
-
-#mainContainer {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    gap: 25px; 
-}
+body { background-color: rgb(68, 68, 68); font-family: sans-serif; }
 
 .itemContainer {
-    background-color: #2f7c7c; 
-    border-radius: 15px;
-    border: 2px solid transparent;
-    filter: drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.3));
-    clip-path: none;
-}
-
-#drinkName, .amount {
-    color: white; 
-    text-transform: none;
-}
-
-body.cyberpunk .amount.active-count {
-    color: var(--cp-cyan) !important;
-}
-
-#add {
-    background-color: rgb(107, 241, 107); 
-    color: white; 
-    border: none;
-    border-radius: 0; 
-}
-
-#sub {
-    background-color: rgb(241, 107, 107); 
+    background-color: #2f7c7c;
     color: white;
+}
+
+#add { background-color: #6bf16b; color: white; }
+#sub { background-color: #f16b6b; color: white; }
+
+#themeToggle, #clearButton, #openSettings {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 10px;
     border: none;
-    border-radius: 0;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-#clearButton {
-    background-color: rgb(194, 0, 0); 
-    border-radius: 15px;
-    color: white; 
-    border: 2px solid transparent;
-    filter: drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.3));
-    clip-path: none;
-}
+#clearButton { background-color: #c20000; color: white; }
+#themeToggle { background-color: #eee; color: #333; }
+#openSettings { background: transparent; border: 1px dashed #ccc; color: #ccc; }
 
-#themeToggle {
-    background-color: #eee;
-    color: #333;
-    border-radius: 25px;
-    border: 2px solid transparent;
-    filter: drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.3));
-    clip-path: none;
-}
-
-/* =========================================
-   2. CLASSIC DARK MODE (50% Darker)
-   ========================================= */
+/* CLASSIC DARK MODE (50% Darker) */
 @media (prefers-color-scheme: dark) {
-    /* Only apply if the body DOES NOT have the cyberpunk class */
-    body:not(.cyberpunk) {
-        background-color: #080808; /* Near-Black Charcoal */
-    }
-
+    body:not(.cyberpunk) { background-color: #080808; }
+    
     body:not(.cyberpunk) .itemContainer {
-        /* Deepened from #1b4d4d to an "Ink" Teal */
-        background-color: #0a2424; 
-        border: 1px solid #143333; /* Very subtle border to define the shape */
-        filter: drop-shadow(5px 5px 12px rgba(0, 0, 0, 0.9));
+        background-color: #0a2424;
+        border: 1px solid #143333;
     }
 
-    body:not(.cyberpunk) #themeToggle {
-        background-color: #1a1a1a;
-        color: #888; /* Dimmed text so it's not too bright */
-        border: 1px solid #222;
-    }
-
-    body:not(.cyberpunk) #add {
-        /* Muted the green slightly to match the darker aesthetic */
-        background-color: #2a5c2a; 
-    }
-
-    body:not(.cyberpunk) #sub {
-        /* Muted the red slightly */
-        background-color: #5c2a2a; 
-    }
-
-    /* 1. Dim the drink/food images so they don't pop too much */
     body:not(.cyberpunk) #itemImage {
         filter: brightness(0.7) contrast(1.1);
-        transition: filter 0.3s ease;
     }
 
-    /* 2. Bring back some "Deep" color to the buttons so they aren't muddy */
-    body:not(.cyberpunk) #add {
-        background-color: #1e6b1e; /* Deeper, richer green */
-        color: rgba(255, 255, 255, 0.8); /* Slightly off-white text */
-    }
-
-    body:not(.cyberpunk) #sub {
-        background-color: #7a1f1f; /* Deeper, richer red */
-        color: rgba(255, 255, 255, 0.8);
-    }
+    body:not(.cyberpunk) #add { background-color: #1e6b1e; }
+    body:not(.cyberpunk) #sub { background-color: #7a1f1f; }
+    
+    body:not(.cyberpunk) .amount.active-count { color: #6bf16b; }
 }
 
 /* =========================================
-   3. CYBERPUNK THEME (Reference UI Style)
+   3. CYBERPUNK THEME
    ========================================= */
 
 body.cyberpunk {
     background-color: var(--cp-dark-bg);
-    /* Subtle grid background to match the menu vibe */
     background-image: 
-        linear-gradient(rgba(255, 0, 60, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 0, 60, 0.05) 1px, transparent 1px);
+        linear-gradient(rgba(255, 0, 60, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 0, 60, 0.02) 1px, transparent 1px);
     background-size: 20px 20px;
 }
 
-body.cyberpunk #mainContainer {
-    /* Blocky, technical font */
-    font-family: 'Arial', 'Courier New', sans-serif; 
-    gap: 15px; 
+body.cyberpunk #totalContainer {
+    background-color: var(--cp-dark-bg);
+    border: 1px solid var(--cp-cyan);
+    border-left: 5px solid var(--cp-cyan);
+    border-radius: 0;
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 95% 100%, 0 100%);
 }
 
 body.cyberpunk .itemContainer {
-    background-color: var(--cp-panel-bg); 
-    border: 1px solid var(--cp-red);
+    background-color: var(--cp-panel-bg);
+    border: 1px solid #80001e;
     border-radius: 0;
-    filter: none;
-    /* Authentic Cyberpunk diagonally cut corners (Top-Left, Bottom-Right) */
     clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
 }
 
-body.cyberpunk #itemImage {
-    filter: drop-shadow(0 0 2px var(--cp-red)); 
-}
-
-body.cyberpunk #drinkName {
-    color: var(--cp-red); 
-    text-transform: uppercase; 
-    letter-spacing: 1px;
-}
-
-body.cyberpunk .amount {
-    color: var(--cp-red); 
-}
+body.cyberpunk #drinkName, body.cyberpunk .amount { color: #cc0030; }
+body.cyberpunk .amount.active-count { color: var(--cp-cyan); }
 
 body.cyberpunk #add {
-    background-color: transparent;
-    border: none;
-    border-left: 1px solid var(--cp-red);
-    border-bottom: 1px solid var(--cp-red);
-    color: var(--cp-cyan); /* Cyan for positive action, matching UI highlights */
-    border-radius: 0;
-}
-
-/* Hover state for buttons to simulate the UI highlight */
-body.cyberpunk #add:active {
-    background-color: rgba(0, 255, 255, 0.2);
+    background: transparent;
+    border-left: 1px solid #80001e;
+    border-bottom: 1px solid #80001e;
+    color: var(--cp-cyan);
 }
 
 body.cyberpunk #sub {
-    background-color: transparent;
-    border: none;
-    border-left: 1px solid var(--cp-red);
-    color: var(--cp-red); 
-    border-radius: 0;
+    background: transparent;
+    border-left: 1px solid #80001e;
+    color: #80001e;
 }
 
-body.cyberpunk #sub:active {
-    background-color: rgba(255, 0, 60, 0.2);
-}
-
-body.cyberpunk #clearButton {
-    background-color: var(--cp-panel-bg); 
-    color: var(--cp-red); 
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    filter: none;
+body.cyberpunk #themeToggle, body.cyberpunk #clearButton, body.cyberpunk #openSettings {
     border-radius: 0;
+    background: transparent;
     border: 1px solid var(--cp-red);
-    clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+    color: var(--cp-red);
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
 }
 
-body.cyberpunk #themeToggle {
-    background-color: transparent;
-    color: var(--cp-cyan);
-    border-radius: 0;
-    border: 1px solid var(--cp-cyan);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-family: 'Arial', sans-serif;
-    clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
-}
+/* =========================================
+   4. MODAL SETTINGS
+   ========================================= */
 
-body.cyberpunk #themeToggle:active {
-    background-color: rgba(0, 255, 255, 0.1);
-}
-
-
-/* Modal Background Overlay */
 .modal {
     display: none; 
     position: fixed;
@@ -332,7 +221,6 @@ body.cyberpunk #themeToggle:active {
     backdrop-filter: blur(8px);
 }
 
-/* Modal Box */
 .modal-content {
     background-color: #1a1a1a;
     margin: 10% auto;
@@ -343,7 +231,6 @@ body.cyberpunk #themeToggle:active {
     border: 1px solid #333;
     text-align: center;
     color: #efefef;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 #settingsGrid {
@@ -351,23 +238,9 @@ body.cyberpunk #themeToggle:active {
     grid-template-columns: 1fr 1fr;
     gap: 15px;
     margin-bottom: 25px;
-    max-height: 400px;
-    overflow-y: auto; /* Scrollable if you add many items */
 }
 
-.price-item {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.price-item label {
-    font-size: 11px;
-    color: #888;
-    margin-bottom: 4px;
-    text-transform: uppercase;
-}
-
+.price-item label { font-size: 10px; color: #888; display: block; text-align: left; }
 .price-item input {
     width: 100%;
     padding: 8px;
@@ -375,19 +248,6 @@ body.cyberpunk #themeToggle:active {
     border: 1px solid #444;
     color: #fff;
     border-radius: 5px;
-    font-size: 16px;
-}
-
-#openSettings {
-    width: 100%;
-    background: transparent;
-    border: 1px solid #444;
-    color: #666;
-    padding: 12px;
-    margin-top: 20px;
-    cursor: pointer;
-    font-size: 14px;
-    border-radius: 10px;
 }
 
 #closeSettings {
@@ -398,7 +258,6 @@ body.cyberpunk #themeToggle:active {
     border: none;
     border-radius: 10px;
     font-weight: bold;
-    cursor: pointer;
 }
 
 /* Cyberpunk Modal Overrides */
@@ -406,16 +265,4 @@ body.cyberpunk .modal-content {
     background-color: #050102;
     border: 2px solid var(--cp-red);
     clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
-}
-
-body.cyberpunk .price-item input {
-    border: 1px solid var(--cp-cyan);
-    color: var(--cp-cyan);
-}
-
-body.cyberpunk #closeSettings {
-    background: transparent;
-    border: 1px solid var(--cp-cyan);
-    color: var(--cp-cyan);
-    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
 }
