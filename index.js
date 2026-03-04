@@ -59,5 +59,28 @@ function ClearStorage() {
     location.reload();
 }
 
+const themeToggle = document.getElementById('themeToggle');
 
+// Check if the user already chose Cyberpunk in a previous visit
+if (localStorage.getItem('theme') === 'cyberpunk') {
+    document.body.classList.add('cyberpunk');
+    themeToggle.innerText = 'SWITCH TO CLASSIC MODE';
+} else {
+    // Set default text for classic mode
+    themeToggle.innerText = 'SWITCH TO CYBERPUNK MODE';
+}
+
+// Listen for the button click
+themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('cyberpunk');
+    
+    // Update the button text and save to localStorage
+    if (document.body.classList.contains('cyberpunk')) {
+        themeToggle.innerText = 'SWITCH TO CLASSIC MODE';
+        localStorage.setItem('theme', 'cyberpunk');
+    } else {
+        themeToggle.innerText = 'SWITCH TO CYBERPUNK MODE';
+        localStorage.setItem('theme', 'classic');
+    }
+});
 
