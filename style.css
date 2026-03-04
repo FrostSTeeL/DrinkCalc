@@ -5,14 +5,13 @@
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     
-    /* Cyberpunk Colors */
-    --neon-magenta: #FF00FF;
-    --neon-cyan: #00FFFF;
-    --neon-blue: #0088FF;
-    --neon-orange-red: #FF4400;
-    --neon-terminal-green: #70FF00;
-    --card-bg-dark: rgba(0, 0, 0, 0.7);
-    --body-bg-deep: rgb(15, 15, 20);
+    /* Optimized Cyberpunk Palette */
+    --neon-cyan-glow: rgba(0, 255, 255, 0.5); 
+    --neon-cyan-border: #00FFFF; 
+    --neon-terminal-green: #70FF00; 
+    --neon-red-glow: rgba(255, 0, 0, 0.6);
+    --neon-red-border: #FF0000;
+    --body-bg-deep: rgb(10, 10, 15);
 }
 
 body {
@@ -22,19 +21,19 @@ body {
     align-items: flex-start;
     min-height: 100vh;
     padding: 20px; 
-    background-color: var(--body-bg-deep); /* Darker, slightly desaturated background */
+    background-color: var(--body-bg-deep);
     box-sizing: border-box;
     /* Subtle scanline texture */
     background-image: repeating-linear-gradient(
         transparent 0px, 
-        rgba(255, 255, 255, 0.05) 1px, 
+        rgba(255, 255, 255, 0.03) 1px, 
         transparent 2px, 
         transparent 3px
     );
 }
 
 #mainContainer {
-    font-family: 'Courier New', 'Courier', monospace; /* Futuristic/monospaced fallback */
+    font-family: 'Courier New', 'Courier', monospace; 
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     width: 100%; 
@@ -46,35 +45,28 @@ body {
 
 .itemContainer {
     display: grid;
-    /* Maintain spacing fixed previously: image column 85px, etc. */
     grid-template-columns: 85px 1fr 40px 75px; 
-    background-color: var(--card-bg-dark); /* Dark, semi-transparent black */
+    background-color: rgba(0, 0, 0, 0.8); /* Deep black background */
     border-radius: 15px;
-    /* Complex, layered neon glow border */
-    border: 2px solid var(--neon-cyan);
-    box-shadow: 
-        0 0 10px var(--neon-cyan),
-        0 0 20px var(--neon-blue),
-        0 0 4px #000 inset;
+    filter: drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.5));
+    box-sizing: border-box;
+    border: 2px solid var(--neon-cyan-border);
+    animation: glow-flicker 2s infinite linear;
 }
 
 #itemImage {
     width: 50px;
     align-self: center;
     margin-left: 15px;
-    /* Makes images look like digitized holographic projections */
-    filter: drop-shadow(0 0 5px var(--neon-cyan));
+    filter: saturate(1.5); 
 }
 
 #drinkName {
-    font-size: clamp(14px, 5vw, 24px); 
+    font-size: clamp(14px, 5vw, 22px); 
     align-self: center;
     text-align: left;
-    color: var(--neon-cyan); /* Strong cyan text */
-    /* Neon glow effect */
-    text-shadow: 
-        0 0 5px var(--neon-cyan),
-        0 0 10px var(--neon-blue);
+    color: var(--neon-cyan-border); 
+    text-transform: uppercase; 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; 
@@ -84,98 +76,134 @@ body {
     font-size: 30px;
     text-align: right;
     align-self: center; 
-    color: var(--neon-terminal-green); /* Green terminal color */
-    /* Strong green terminal glow */
-    text-shadow: 
-        0 0 5px var(--neon-terminal-green),
-        0 0 10px #70FF00;
+    color: var(--neon-terminal-green); 
+    text-shadow: 0 0 5px rgba(112, 255, 0, 0.5);
 }
 
 #buttonContainer {
     display: grid;
     grid-template-columns: 1fr;
     justify-self: right;
+    gap: 5px; /* Adds a tiny gap between the + and - buttons */
+    padding: 5px; /* Keeps the glowing borders away from the cyan container edge */
 }
 
 #add {
     align-self: center;
-    width: 50px;
-    height: 50px;
-    border-top-right-radius: 15px;
-    border: none;
-    background-color: transparent; /* Dark background handled by card */
-    color: var(--neon-magenta); /* Saturated Magenta */
+    width: 100%; /* Fills the new padded container */
+    height: 45px;
+    border-top-right-radius: 10px; /* Maintains the outer curve */
+    border-bottom-left-radius: 10px; /* Cyberpunk cut corner */
+    
+    /* Hollow neon green styling */
+    background-color: rgba(0, 0, 0, 0.8); 
+    border: 2px solid var(--neon-terminal-green);
+    color: var(--neon-terminal-green); 
+    text-shadow: 0 0 5px var(--neon-terminal-green);
+    box-shadow: 0 0 5px rgba(112, 255, 0, 0.3);
+    
     font-size: larger;
     font-weight: bolder;
     cursor: pointer;
-    transition: transform 0.1s ease, box-shadow 0.1s ease; 
-    /* Complex button glow */
-    box-shadow: 
-        0 0 10px var(--neon-magenta),
-        0 0 20px #FF00FF;
-    text-shadow: 0 0 5px #FFF;
+    transition: transform 0.1s ease; 
 }
 
 #sub {
     align-self: center;
-    width: 50px;
-    height: 50px;
-    border-bottom-right-radius: 15px;
-    border: none;
-    background-color: transparent; 
-    color: var(--neon-orange-red); /* Flickering Orange-Red */
+    width: 100%;
+    height: 45px;
+    
+    /* Applies your specific lower-left / upper-right focus */
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-left-radius: 0px; /* Sharp corners on the other edges */
+    border-bottom-right-radius: 0px;
+    
+    /* Hollow neon red styling */
+    background-color: rgba(0, 0, 0, 0.8); 
+    border: 2px solid var(--neon-red-border);
+    color: var(--neon-red-border);
+    text-shadow: 0 0 5px var(--neon-red-border);
+    box-shadow: 0 0 5px var(--neon-red-glow);
+    
     font-size: larger;
     font-weight: bolder;
     cursor: pointer;
-    transition: transform 0.1s ease, box-shadow 0.1s ease; 
-    /* Button glow */
-    box-shadow: 
-        0 0 10px var(--neon-orange-red),
-        0 0 20px #FF0000;
-    text-shadow: 0 0 5px #FFF;
+    transition: transform 0.1s ease; 
 }
 
 #clearButton {
-    background-color: transparent;
+    /* Matches the dark item containers */
+    background-color: rgba(0, 0, 0, 0.8); 
     border-radius: 15px;
-    border: none;
     height: 60px; 
     margin-bottom: 30px; 
-    color: var(--neon-blue); /* Electric Blue/Cyan */
+    
+    /* Neon red text and glow */
+    color: var(--neon-red-border); 
+    text-shadow: 0 0 5px var(--neon-red-glow);
+    
     font-size: 25px;
     font-weight: bold;
     cursor: pointer;
-    transition: transform 0.1s ease, box-shadow 0.1s ease; 
-    text-transform: uppercase; /* Cyberpunk aesthetic choice */
-    /* Massive, layered Clear button glow */
-    box-shadow: 
-        0 0 15px var(--neon-blue),
-        0 0 30px #00FFFF;
-    text-shadow: 
-        0 0 5px var(--neon-blue),
-        0 0 10px #00FFFF;
+    transition: transform 0.1s ease; 
+    text-transform: uppercase;
+    
+    /* Matches container layout but with red flicker */
+    filter: drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.5));
+    border: 2px solid var(--neon-red-border);
+    animation: red-glow-flicker 2s infinite linear;
 }
 
-/* Add tactile, satisfying "click" effects for touch input */
+/* Tactile press feedback */
 #add:active, #sub:active, #clearButton:active {
     transform: scale(0.92);
 }
 
-/* Keyframes for subtle flickering on the Clear button, like a dynamic sign */
-@keyframes flicker {
-  0%   { opacity: 1; }
-  10%  { opacity: 0.8; }
-  20%  { opacity: 1; }
-  30%  { opacity: 0.9; }
-  40%  { opacity: 1; }
-  50%  { opacity: 1; }
-  60%  { opacity: 0.9; }
-  70%  { opacity: 1; }
-  80%  { opacity: 0.8; }
-  90%  { opacity: 1; }
-  100% { opacity: 1; }
+/* Keyframes for the cyan container flicker */
+@keyframes glow-flicker {
+    0%, 100% {
+        border-color: var(--neon-cyan-border);
+        box-shadow: 0 0 5px var(--neon-cyan-glow);
+    }
+    5% {
+        border-color: #00BBBB; 
+        box-shadow: 0 0 2px rgba(0, 255, 255, 0.2); 
+    }
+    10% {
+        border-color: var(--neon-cyan-border);
+        box-shadow: 0 0 8px var(--neon-cyan-glow); 
+    }
+    15% {
+        border-color: #008888;
+        box-shadow: 0 0 1px rgba(0, 255, 255, 0.1); 
+    }
+    20% {
+        border-color: var(--neon-cyan-border);
+        box-shadow: 0 0 5px var(--neon-cyan-glow);
+    }
+    80% {
+        border-color: var(--neon-cyan-border);
+        box-shadow: 0 0 5px var(--neon-cyan-glow);
+    }
 }
 
-#clearButton:hover {
-    animation: flicker 1s infinite alternate;
+/* Keyframes for the clear button flicker */
+@keyframes red-glow-flicker {
+    0%, 100% {
+        border-color: var(--neon-red-border);
+        box-shadow: 0 0 5px var(--neon-red-glow);
+    }
+    10% {
+        border-color: #BB0000;
+        box-shadow: 0 0 2px rgba(255, 0, 0, 0.2);
+    }
+    20% {
+        border-color: var(--neon-red-border);
+        box-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+    }
+    80% {
+        border-color: var(--neon-red-border);
+        box-shadow: 0 0 5px var(--neon-red-glow);
+    }
 }
