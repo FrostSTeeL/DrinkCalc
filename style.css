@@ -43,6 +43,7 @@ body {
     grid-template-columns: 85px 1fr 40px 75px; 
     box-sizing: border-box;
     transition: all 0.4s ease;
+    overflow: hidden; /* Ensures nothing spills out of the rounded corners */
 }
 
 #itemImage {
@@ -74,7 +75,8 @@ body {
     grid-template-columns: 1fr;
     justify-self: right;
     gap: 5px; 
-    padding: 5px; 
+    /* Removed the right padding so buttons sit perfectly flush */
+    padding: 5px 0px 5px 5px; 
 }
 
 #add, #sub {
@@ -141,7 +143,7 @@ body {
 }
 
 #add {
-    border-radius: 0px 15px 0px 0px; 
+    border-radius: 0px 13px 0px 0px; /* Flush top right */
     background-color: rgb(107, 241, 107); 
     color: white; 
     border: 2px solid transparent;
@@ -150,7 +152,7 @@ body {
 }
 
 #sub {
-    border-radius: 0px 0px 15px 0px; 
+    border-radius: 0px 0px 13px 0px; /* Flush bottom right */
     background-color: rgb(241, 107, 107); 
     color: white;
     border: 2px solid transparent;
@@ -216,18 +218,24 @@ body.cyberpunk .amount {
 }
 
 body.cyberpunk #add {
-    border-radius: 4px 10px 4px 4px; 
+    /* 13px hugs the top right perfectly */
+    border-radius: 4px 13px 4px 4px; 
     background-color: rgba(0, 0, 0, 0.8); 
     border: 2px solid var(--neon-terminal-green);
+    /* Remove the right border so it looks integrated into the container edge */
+    border-right: none; 
     color: var(--neon-terminal-green); 
     text-shadow: 0 0 5px var(--neon-terminal-green);
     box-shadow: 0 0 8px rgba(112, 255, 0, 0.4);
 }
 
 body.cyberpunk #sub {
-    border-radius: 4px 4px 10px 4px; 
+    /* 13px hugs the bottom right perfectly */
+    border-radius: 4px 4px 13px 4px; 
     background-color: rgba(0, 0, 0, 0.8); 
     border: 2px solid var(--neon-red-border);
+    /* Remove the right border so it looks integrated into the container edge */
+    border-right: none; 
     color: var(--neon-red-border);
     text-shadow: 0 0 5px var(--neon-red-border);
     box-shadow: 0 0 8px var(--neon-red-glow);
