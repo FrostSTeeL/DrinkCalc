@@ -5,14 +5,17 @@
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     
-    /* Optimized Cyberpunk Palette */
+    /* Cyberpunk Variables */
     --neon-cyan-glow: rgba(0, 255, 255, 0.6); 
     --neon-cyan-border: #00FFFF; 
     --neon-terminal-green: #70FF00; 
     --neon-red-glow: rgba(255, 0, 0, 0.7);
     --neon-red-border: #FF0000;
-    --body-bg-deep: rgb(10, 10, 15);
 }
+
+/* =========================================
+   1. SHARED LAYOUT (Applies to both themes)
+   ========================================= */
 
 body {
     margin: 0;
@@ -21,63 +24,49 @@ body {
     align-items: flex-start;
     min-height: 100vh;
     padding: 20px; 
-    background-color: var(--body-bg-deep);
     box-sizing: border-box;
-    /* Subtle scanline texture */
-    background-image: repeating-linear-gradient(
-        transparent 0px, 
-        rgba(255, 255, 255, 0.03) 1px, 
-        transparent 2px, 
-        transparent 3px
-    );
+    transition: background-color 0.4s ease, background-image 0.4s ease;
 }
 
 #mainContainer {
-    font-family: 'Courier New', 'Courier', monospace; 
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     width: 100%; 
     max-width: 500px; 
     padding-bottom: 40px; 
-    gap: 30px; 
     box-sizing: border-box;
+    transition: gap 0.4s ease;
 }
 
 .itemContainer {
     display: grid;
     grid-template-columns: 85px 1fr 40px 75px; 
-    background-color: rgba(0, 0, 0, 0.8); 
-    border-radius: 15px;
     box-sizing: border-box;
-    border: 2px solid var(--neon-cyan-border);
-    animation: glow-flicker 2s infinite linear;
+    transition: all 0.4s ease;
 }
 
 #itemImage {
     width: 50px;
     align-self: center;
     margin-left: 15px;
-    filter: saturate(1.5) drop-shadow(0 0 5px var(--neon-cyan-glow)); 
+    transition: filter 0.4s ease;
 }
 
 #drinkName {
     font-size: clamp(14px, 5vw, 22px); 
     align-self: center;
     text-align: left;
-    color: var(--neon-cyan-border); 
-    text-transform: uppercase; 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; 
-    text-shadow: 0 0 5px var(--neon-cyan-glow);
+    transition: all 0.4s ease;
 }
 
 .amount {
     font-size: 30px;
     text-align: right;
     align-self: center; 
-    color: var(--neon-terminal-green); 
-    text-shadow: 0 0 8px rgba(112, 255, 0, 0.6);
+    transition: all 0.4s ease;
 }
 
 #buttonContainer {
@@ -88,115 +77,213 @@ body {
     padding: 5px; 
 }
 
-#add {
+#add, #sub {
     align-self: center;
     width: 100%; 
     height: 45px;
-    
-    /* Concentric rounding to perfectly match the outer container */
-    /* top-left, top-right, bottom-right, bottom-left */
+    font-size: larger;
+    font-weight: bolder;
+    cursor: pointer;
+    transition: all 0.2s ease; 
+}
+
+#clearButton {
+    height: 60px; 
+    margin-bottom: 10px; 
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease; 
+    width: 100%;
+}
+
+#themeToggle {
+    height: 50px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 30px;
+    transition: all 0.4s ease;
+    width: 100%;
+}
+
+#add:active, #sub:active, #clearButton:active, #themeToggle:active {
+    transform: scale(0.92);
+}
+
+/* =========================================
+   2. CLASSIC THEME (Default)
+   ========================================= */
+
+body {
+    background-color: rgb(68, 68, 68);
+    background-image: none;
+}
+
+#mainContainer {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    gap: 25px; 
+}
+
+.itemContainer {
+    background-color: #2f7c7c; 
+    border-radius: 15px;
+    border: 2px solid transparent;
+    filter: drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.3));
+    animation: none;
+}
+
+#drinkName, .amount {
+    color: white; 
+    text-shadow: none;
+    text-transform: none;
+}
+
+#add {
+    border-radius: 0px 15px 0px 0px; 
+    background-color: rgb(107, 241, 107); 
+    color: white; 
+    border: 2px solid transparent;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+#sub {
+    border-radius: 0px 0px 15px 0px; 
+    background-color: rgb(241, 107, 107); 
+    color: white;
+    border: 2px solid transparent;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+#clearButton {
+    background-color: rgb(194, 0, 0); 
+    border-radius: 15px;
+    color: white; 
+    text-transform: none;
+    border: 2px solid transparent;
+    filter: drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.3));
+    text-shadow: none;
+    animation: none;
+    box-shadow: none;
+}
+
+#themeToggle {
+    background-color: #eee;
+    color: #333;
+    border: 2px solid transparent;
+    filter: drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.3));
+    text-shadow: none;
+    box-shadow: none;
+}
+
+/* =========================================
+   3. CYBERPUNK THEME (Triggered by body.cyberpunk)
+   ========================================= */
+
+body.cyberpunk {
+    background-color: rgb(10, 10, 15);
+    background-image: repeating-linear-gradient(transparent 0px, rgba(255, 255, 255, 0.03) 1px, transparent 2px, transparent 3px);
+}
+
+body.cyberpunk #mainContainer {
+    font-family: 'Courier New', 'Courier', monospace; 
+    gap: 30px; 
+}
+
+body.cyberpunk .itemContainer {
+    background-color: rgba(0, 0, 0, 0.8); 
+    border: 2px solid var(--neon-cyan-border);
+    filter: none;
+    animation: glow-flicker 4s infinite normal; 
+}
+
+body.cyberpunk #itemImage {
+    filter: saturate(1.5) drop-shadow(0 0 5px var(--neon-cyan-glow)); 
+}
+
+body.cyberpunk #drinkName {
+    color: var(--neon-cyan-border); 
+    text-transform: uppercase; 
+    text-shadow: 0 0 5px var(--neon-cyan-glow);
+}
+
+body.cyberpunk .amount {
+    color: var(--neon-terminal-green); 
+    text-shadow: 0 0 8px rgba(112, 255, 0, 0.6);
+}
+
+body.cyberpunk #add {
     border-radius: 4px 10px 4px 4px; 
-    
     background-color: rgba(0, 0, 0, 0.8); 
     border: 2px solid var(--neon-terminal-green);
     color: var(--neon-terminal-green); 
     text-shadow: 0 0 5px var(--neon-terminal-green);
     box-shadow: 0 0 8px rgba(112, 255, 0, 0.4);
-    
-    font-size: larger;
-    font-weight: bolder;
-    cursor: pointer;
-    transition: transform 0.1s ease; 
 }
 
-#sub {
-    align-self: center;
-    width: 100%;
-    height: 45px;
-    
-    /* Concentric rounding to perfectly match the outer container */
-    /* top-left, top-right, bottom-right, bottom-left */
+body.cyberpunk #sub {
     border-radius: 4px 4px 10px 4px; 
-    
     background-color: rgba(0, 0, 0, 0.8); 
     border: 2px solid var(--neon-red-border);
     color: var(--neon-red-border);
     text-shadow: 0 0 5px var(--neon-red-border);
     box-shadow: 0 0 8px var(--neon-red-glow);
-    
-    font-size: larger;
-    font-weight: bolder;
-    cursor: pointer;
-    transition: transform 0.1s ease; 
 }
 
-#clearButton {
+body.cyberpunk #clearButton {
     background-color: rgba(0, 0, 0, 0.8); 
-    border-radius: 15px;
-    height: 60px; 
-    margin-bottom: 30px; 
-    
     color: var(--neon-red-border); 
     text-shadow: 0 0 8px var(--neon-red-glow);
-    
-    font-size: 25px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.1s ease; 
     text-transform: uppercase;
-    
+    filter: none;
     border: 2px solid var(--neon-red-border);
-    animation: red-glow-flicker 2s infinite linear;
+    animation: red-glow-flicker 4s infinite normal; 
 }
 
-#add:active, #sub:active, #clearButton:active {
-    transform: scale(0.92);
+body.cyberpunk #themeToggle {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: var(--neon-cyan-border);
+    border: 2px solid var(--neon-cyan-border);
+    text-shadow: 0 0 5px var(--neon-cyan-glow);
+    box-shadow: 0 0 10px var(--neon-cyan-glow) inset, 0 0 10px var(--neon-cyan-glow);
+    filter: none;
+    text-transform: uppercase;
+    font-family: 'Courier New', 'Courier', monospace;
 }
 
-/* CYBERPUNK GLOW ANIMATIONS */
+/* =========================================
+   4. CYBERPUNK ANIMATIONS (Softened)
+   ========================================= */
 
 @keyframes glow-flicker {
-    0%, 100% {
-        border-color: var(--neon-cyan-border);
-        box-shadow: 0 0 5px var(--neon-cyan-border), 0 0 15px var(--neon-cyan-glow), 0 0 30px var(--neon-cyan-glow);
+    0%, 90%, 100% { 
+        border-color: var(--neon-cyan-border); 
+        box-shadow: 0 0 5px var(--neon-cyan-border), 0 0 15px var(--neon-cyan-glow), 0 0 30px var(--neon-cyan-glow); 
     }
-    5% {
-        border-color: #00BBBB; 
-        box-shadow: 0 0 2px #00BBBB, 0 0 5px rgba(0, 255, 255, 0.2); 
+    93% { 
+        border-color: #00EEEE; 
+        box-shadow: 0 0 3px var(--neon-cyan-border), 0 0 10px var(--neon-cyan-glow), 0 0 20px var(--neon-cyan-glow); 
     }
-    10% {
-        border-color: var(--neon-cyan-border);
-        box-shadow: 0 0 8px var(--neon-cyan-border), 0 0 20px var(--neon-cyan-glow); 
-    }
-    15% {
-        border-color: #008888;
-        box-shadow: 0 0 1px rgba(0, 255, 255, 0.1); 
-    }
-    20% {
-        border-color: var(--neon-cyan-border);
-        box-shadow: 0 0 5px var(--neon-cyan-border), 0 0 15px var(--neon-cyan-glow);
-    }
-    80% {
-        border-color: var(--neon-cyan-border);
-        box-shadow: 0 0 5px var(--neon-cyan-border), 0 0 15px var(--neon-cyan-glow), 0 0 30px var(--neon-cyan-glow);
+    96% { 
+        border-color: #FFFFFF; 
+        box-shadow: 0 0 6px #FFFFFF, 0 0 18px var(--neon-cyan-glow), 0 0 35px var(--neon-cyan-glow); 
     }
 }
 
 @keyframes red-glow-flicker {
-    0%, 100% {
-        border-color: var(--neon-red-border);
-        box-shadow: 0 0 5px var(--neon-red-border), 0 0 15px var(--neon-red-glow), 0 0 30px var(--neon-red-glow);
+    0%, 90%, 100% { 
+        border-color: var(--neon-red-border); 
+        box-shadow: 0 0 5px var(--neon-red-border), 0 0 15px var(--neon-red-glow), 0 0 30px var(--neon-red-glow); 
     }
-    10% {
-        border-color: #BB0000;
-        box-shadow: 0 0 2px #BB0000, 0 0 5px rgba(255, 0, 0, 0.2);
+    93% { 
+        border-color: #CC0000; 
+        box-shadow: 0 0 3px #CC0000, 0 0 10px rgba(255, 0, 0, 0.4), 0 0 20px rgba(255, 0, 0, 0.4); 
     }
-    20% {
-        border-color: var(--neon-red-border);
-        box-shadow: 0 0 8px var(--neon-red-border), 0 0 20px var(--neon-red-glow);
-    }
-    80% {
-        border-color: var(--neon-red-border);
-        box-shadow: 0 0 5px var(--neon-red-border), 0 0 15px var(--neon-red-glow), 0 0 30px var(--neon-red-glow);
+    96% { 
+        border-color: #FF5555; 
+        box-shadow: 0 0 6px #FF5555, 0 0 18px var(--neon-red-glow), 0 0 35px var(--neon-red-glow); 
     }
 }
