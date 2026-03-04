@@ -243,16 +243,17 @@ body.cyberpunk .total-amount-box {
 }
 
 /* İÇERİK METİNLERİ */
-body.cyberpunk #drinkName { 
-    color: var(--cp-red) !important; /* Beyazı kırmızıya zorlar */
-    display: flex;
-    align-items: center; 
-    text-shadow: 0 0 5px rgba(255, 0, 60, 0.5); /* Hafif kırmızı neon efekti (opsiyonel) */
-}, 
+body.cyberpunk #drinkName, 
 body.cyberpunk .amount { 
     color: var(--cp-red); 
     display: flex;
     align-items: center; 
+}
+
+body.cyberpunk .itemContainer p[id$="Name"] {
+    color: var(--cp-red) !important;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(255, 0, 60, 0.5);
 }
 
 body.cyberpunk .amount.active-count {
