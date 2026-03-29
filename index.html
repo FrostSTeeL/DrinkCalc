@@ -6,6 +6,14 @@
     <title>Drink Tracker</title>
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css?v=2.8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="DrinkCalc">
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <link rel="manifest" href="manifest.json">
+
 </head>
 <body>
     <div id="mainContainer">
@@ -140,5 +148,19 @@
         </div>
     </div>
     <script src="index.js?v=2.0"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/DrinkCalc/sw.js')
+            .then(registration => {
+              console.log('ServiceWorker registered successfully with scope: ', registration.scope);
+            })
+            .catch(err => {
+              console.log('ServiceWorker registration failed: ', err);
+            });
+        });
+      }
+    </script>
+
 </body>
 </html>
